@@ -1,0 +1,46 @@
+{
+    "name": "purematters",
+    "version": "1.0.0",
+    "description": "inventory software.",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rubentalstra/PureMatters.git"
+    },
+    "author": "Ruben Talstra",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/rubentalstra/PureMatters/issues"
+    },
+    "homepage": "https://github.com/rubentalstra/PureMatters#readme",
+    "dependencies": {
+        "@sentry/node": "^7.10.0",
+        "@sentry/tracing": "^7.10.0",
+        "bootstrap": "^5.2.0",
+        "dotenv": "^16.0.1",
+        "ejs": "^3.1.8",
+        "express": "^4.18.1",
+        "fs": "^0.0.1-security",
+        "path": "^0.12.7",
+        "pm2": "^5.2.0",
+        "spdy": "^4.0.2"
+    },
+    "devDependencies": {
+        "@fortawesome/fontawesome-free": "^6.1.2",
+        "@sentry/webpack-plugin": "^1.19.0",
+        "eslint": "^8.21.0",
+        "eslint-plugin-security-node": "^1.1.1",
+        "jest": "^28.1.3",
+        "pm2": "^5.2.0"
+    },
+    "prettier": {
+        "printWidth": 110,
+        "trailingComma": "es5",
+        "tabWidth": 4,
+        "semi": true,
+        "singleQuote": true
+    }
+}

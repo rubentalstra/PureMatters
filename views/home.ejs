@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" status="width=device-width, initial-scale=1.0" />
+
+        <title>PureMatters Inventory - Home</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+
+        <script defer src="/fontawesome/js/all.js"></script>
+        <link rel="stylesheet" href="/app.css" />
+        <link rel="stylesheet" href="/style.css" />
+
+        <style>
+            .child {
+                position: absolute;
+                top: 40%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        </style>
+    </head>
+
+    <body>
+        <%- include('includes/navbar', {}); %>
+
+        <div class="row" style="margin: auto">
+            <div id="card-div" class="child col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-description">TEst test tes</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('includes/footer'); %>
+
+        <!-- importing bootstrap.js and supporting js libraries -->
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+    </body>
+</html>
