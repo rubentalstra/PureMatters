@@ -4,13 +4,42 @@
 
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
             <div class="btn-group mr-2" role="group" aria-label="Second group">
-                <a class="btn btn-secondary" href="/WEB/V2/settings" role="button">
+                <a class="btn btn-secondary" href="#" role="button">
                     <i class="fa-solid fa-gear"></i> settings
                 </a>
             </div>
-            <div class="btn-group" role="group" aria-label="Third group">
-                <a class="btn btn-secondary" href="/WEB/V2/signin" role="button">test</a>
+
+            <div class="btn-group mr-2" role="group" aria-label="Third group">
+                <!-- DropDown -->
+                <div class="dropdown">
+                    <button
+                        type="button"
+                        class="btn btn-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        data-bs-auto-close="outside"
+                    >
+                        <i class="fa-solid fa-gear"></i> Product instellingen
+                    </button>
+                    <div class="dropdown-menu w-100 p-3">
+                        <div class="mb-3">
+                            <a class="btn btn-success" href="#" role="button">
+                                <i class="fa-solid fa-plus"></i> Toevoegen
+                            </a>
+                        </div>
+                        <div>
+                            <a class="btn btn-danger" href="#" role="button">
+                                <i class="fa-solid fa-minus"></i> Verwijderen
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <!-- <div class="btn-group" role="group" aria-label="Third group">
+                <a class="btn btn-success" href="#" role="button">Product toevoegen</a>
+                <a class="btn btn-danger" href="#" role="button">Product verwijderen</a>
+            </div> -->
         </div>
     </div>
 </nav>

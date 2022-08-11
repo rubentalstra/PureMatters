@@ -8,38 +8,105 @@
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
         <link rel="stylesheet" href="/css/bootstrap.min.css" />
+        <link href="css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 
         <script defer src="/fontawesome/js/all.js"></script>
+
         <link rel="stylesheet" href="/app.css" />
         <link rel="stylesheet" href="/style.css" />
-
-        <style>
-            .child {
-                position: absolute;
-                top: 40%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
-        </style>
     </head>
 
     <body>
         <%- include('includes/navbar', {}); %>
 
         <div class="row" style="margin: auto">
-            <div id="card-div" class="child col-md-3">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h5 class="card-description">TEst test tes</h5>
-                    </div>
-                </div>
+            <div id="card-div" class="col-md-12">
+                <table id="table_id" class="table table-striped" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>userId</th>
+                            <th>id</th>
+                            <th>title</th>
+                            <th>completed</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>userId</th>
+                            <th>id</th>
+                            <th>title</th>
+                            <th>completed</th>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
 
         <%- include('includes/footer'); %>
 
         <!-- importing bootstrap.js and supporting js libraries -->
+        <script src="/js/jquery.min.js"></script>
+        <script src="/jquery.dataTables.min.js"></script>
+        <script src="/js/dataTables.bootstrap5.min.js"></script>
         <script src="/js/popper.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                // Create search inputs in footer
+                $('#table_id tfoot th').each(function () {
+                    var title = $(this).text();
+                    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+                });
+
+                // DataTable initialisation
+                var table = $('#table_id').DataTable({
+                    // searching: false,
+                    paging: true,
+                    autoWidth: true,
+                    // processing: true,
+                    ajax: {
+                        type: 'GET',
+                        url: 'https://jsonplaceholder.typicode.com/todos',
+                        dataSrc: function (json) {
+                            return json;
+                        },
+                    },
+
+                    columns: [{ data: 'userId' }, { data: 'id' }, { data: 'title' }, { data: 'completed' }],
+                    initComplete: function (settings, json) {
+                        var footer = $('#table_id tfoot tr');
+                        $('#table_id thead').append(footer);
+
+                        this.api()
+                            .columns(3)
+                            .every(function () {
+                                var column = this;
+                                var select = $('<select><option value="">Select Kleur</option></select>')
+                                    .appendTo($(column.footer()).empty())
+                                    .on('change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                    });
+
+                                column
+                                    .data()
+                                    .unique()
+                                    .sort()
+                                    .each(function (d, j) {
+                                        select.append('<option value="' + d + '">' + d + '</option>');
+                                    });
+                            });
+                    },
+                });
+                // Apply the search
+                $('#table_id thead').on('keyup', 'input', function () {
+                    table.column($(this).parent().index()).search(this.value).draw();
+                });
+
+                // $('#table_id').DataTable();
+            });
+        </script>
     </body>
 </html>
