@@ -8,7 +8,7 @@
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
         <link rel="stylesheet" href="/css/bootstrap.min.css" />
-        <link href="https://localhost:8080/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+        <link href="/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 
         <script defer src="/fontawesome/js/all.js"></script>
 
@@ -214,7 +214,7 @@
                     autoWidth: true,
                     ajax: {
                         type: 'GET',
-                        url: 'https://localhost:8080/api/products/history/<%= id %>',
+                        url: '/api/products/history/<%= id %>',
                         dataSrc: function (json) {
                             console.log(json);
                             return json;
