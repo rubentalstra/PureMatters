@@ -26,16 +26,20 @@ const getRoutes = (mainController, router) => {
     // Pages
     router.get('/home', mainController.getHomePage);
     router.get('/details/:id', mainController.getDetailsPage);
-    router.get('/edit-products', mainController.getEditPage);
+
+    router.get('/settings-products', mainController.getSettingsPage);
+    router.get('/add-products', mainController.getAddPage);
+    router.get('/edit/:id', mainController.getEditPage);
+    // router.get('/edit-products', mainController.getEditPage);
 
     // API
     router.get('/api/products', mainController.getAllProducts);
+    router.post('/api/products/create', mainController.createProduct);
+    router.post('/api/products/edit/:id', mainController.editProduct);
+    router.post('/api/products/delete', mainController.delProduct);
 
     router.get('/api/products/history/:id', mainController.getProductHistory);
-
-    // router.get('/api/products/:id', mainController.getProductDetails);
     router.post('/api/products/:id', mainController.putProduct);
-    router.delete('/api/products/:id', mainController.delProduct);
 
     // router.post(
     //     '/uploadCSV',

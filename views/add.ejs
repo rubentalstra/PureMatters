@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" status="width=device-width, initial-scale=1.0" />
 
-        <title>PureMatters Inventory - Edit Product</title>
+        <title>PureMatters Inventory - Add Product</title>
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
         <link rel="stylesheet" href="/css/bootstrap.min.css" />
@@ -28,7 +28,7 @@
                                 <div class="d-flex flex-column align-items-center text-center">
                                     <i class="fa-solid fa-warehouse fa-8x"></i>
                                     <div class="mt-3">
-                                        <h4>Edit product</h4>
+                                        <h4>add new product</h4>
                                     </div>
                                 </div>
                             </div>
@@ -39,7 +39,7 @@
                             <div class="card-body">
                                 <form
                                     method="post"
-                                    action="/api/products/edit/<%= product[0]['id'] %>"
+                                    action="/api/products/create"
                                     enctype="application/x-www-form-urlencoded"
                                 >
                                     <div class="row">
@@ -49,7 +49,7 @@
                                                 type="text"
                                                 name="name"
                                                 class="form-control text-muted mb-0"
-                                                value="<%= product[0]['name'] %>"
+                                                value=""
                                             />
                                         </div>
                                     </div>
@@ -61,7 +61,7 @@
                                                 type="text"
                                                 name="category"
                                                 class="form-control text-muted mb-0"
-                                                value="<%= product[0]['category'] %>"
+                                                value=""
                                             />
                                         </div>
                                     </div>
@@ -73,7 +73,7 @@
                                                 type="text"
                                                 name="color"
                                                 class="form-control text-muted mb-0"
-                                                value="<%= product[0]['color'] %>"
+                                                value=""
                                             />
                                         </div>
                                     </div>
@@ -85,7 +85,7 @@
                                                 type="text"
                                                 name="size"
                                                 class="form-control text-muted mb-0"
-                                                value="<%= product[0]['size'] %>"
+                                                value=""
                                             />
                                         </div>
                                     </div>
@@ -94,7 +94,7 @@
                                     <div class="row">
                                         <div class="d-flex flex-column align-items-center text-center">
                                             <button type="submit" class="btn btn-success">
-                                                update Product
+                                                Voeg Nieuw Product toe
                                             </button>
                                         </div>
                                     </div>

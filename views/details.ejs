@@ -80,11 +80,32 @@
                                     <div id="newStock" class="collapse">
                                         <br />
                                         <h3>Voorraad Toevoegen</h3>
+                                        <form action="/api/products/<%= details[0]['id'] %>" method="post">
+                                            <input type="hidden" id="type" name="type" value="add" />
 
-                                        <input type="hidden" id="type" name="type" value="add" />
-                                        <p>This is the first paragraph.</p>
-                                        <p>This is the second paragraph.</p>
-                                        <p>This is the third paragraph.</p>
+                                            <input
+                                                type="hidden"
+                                                id="oldAmount"
+                                                name="oldAmount"
+                                                value="<%= details[0]['amount'] %>"
+                                            />
+
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="addAmount">#</span>
+                                                <input
+                                                    min="1"
+                                                    type="number"
+                                                    class="form-control"
+                                                    placeholder="Voorraad Toevoegen"
+                                                    aria-label="Voorraad Toevoegen"
+                                                    aria-describedby="addAmount"
+                                                    id="addAmount"
+                                                    name="diffAmount"
+                                                />
+                                            </div>
+
+                                            <button type="submit" class="btn btn-secondary">Submit</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -150,6 +171,7 @@
                 <table id="table_id" class="table table-striped" style="width: 100%">
                     <thead>
                         <tr>
+                            <th>id</th>
                             <th>new Total</th>
                             <th>old Total</th>
                             <th>Diff</th>
@@ -158,6 +180,7 @@
                     </thead>
                     <tfoot>
                         <tr>
+                            <th>id</th>
                             <th>new Total</th>
                             <th>old Total</th>
                             <th>Diff</th>
@@ -199,15 +222,31 @@
                     },
 
                     columns: [
+                        {
+                            data: 'id',
+                            render: function (data, type, full, meta) {
+                                return meta.row + 1;
+                            },
+                        },
                         { data: 'new_amount' },
                         { data: 'old_amount' },
                         { data: 'diff_amount' },
-                        { data: 'last_modified_dt' },
+                        {
+                            data: 'last_modified_dt',
+                            render: function (data, type, row) {
+                                return (
+                                    new Date(data).toLocaleDateString('nl-nl') +
+                                    ' ' +
+                                    new Date(data).toLocaleTimeString('nl-nl')
+                                );
+                            },
+                        },
                     ],
                     aaSorting: [],
+
                     createdRow: function (row, data, index) {
                         if (data['diff_amount'] > 0) {
-                            $('td', row).eq(2).addClass('text-success font-weight-bold');
+                            $('td', row).eq(3).addClass('text-success font-weight-bold');
                         }
                     },
                     initComplete: function (settings, json) {
