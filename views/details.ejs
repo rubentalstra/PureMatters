@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" status="width=device-width, initial-scale=1.0" />
+
+        <title>PureMatters Inventory - Product Details</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+        <link href="https://localhost:8080/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+        <script defer src="/fontawesome/js/all.js"></script>
+
+        <link rel="stylesheet" href="/app.css" />
+        <link rel="stylesheet" href="/style.css" />
+    </head>
+
+    <body>
+        <%- include('includes/navbar', {}); %>
+
+        <div class="row" style="margin: auto">
+            <div id="card-div" class="col-md-12" style="margin-bottom: 0px !important">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center text-center">
+                                    <i class="fa-solid fa-warehouse fa-8x"></i>
+                                    <div class="mt-3">
+                                        <h4><%= details[0]['name'] %></h4>
+
+                                        <br />
+                                        <p class="text-muted font-size-sm"></p>
+                                        <button
+                                            class="btn btn-primary"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#sold"
+                                        >
+                                            <i class="fa-solid fa-bag-shopping"></i> Product Verkocht
+                                        </button>
+                                        <button
+                                            class="btn btn-primary"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#newStock"
+                                        >
+                                            <i class="fa-solid fa-box-open"></i> Voorraad Toevoegen
+                                        </button>
+                                    </div>
+                                    <div id="sold" class="collapse">
+                                        <br />
+                                        <h3>Product Verkocht</h3>
+                                        <form action="/api/products/<%= details[0]['id'] %>" method="post">
+                                            <input type="hidden" id="type" name="type" value="sold" />
+
+                                            <input
+                                                type="hidden"
+                                                id="oldAmount"
+                                                name="oldAmount"
+                                                value="<%= details[0]['amount'] %>"
+                                            />
+
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="soldAmount">#</span>
+                                                <input
+                                                    min="1"
+                                                    type="number"
+                                                    class="form-control"
+                                                    placeholder="Aantal Verkocht"
+                                                    aria-label="Aantal Verkocht"
+                                                    aria-describedby="soldAmount"
+                                                    id="soldAmount"
+                                                    name="diffAmount"
+                                                />
+                                            </div>
+
+                                            <button type="submit" class="btn btn-secondary">Submit</button>
+                                        </form>
+                                    </div>
+                                    <div id="newStock" class="collapse">
+                                        <br />
+                                        <h3>Voorraad Toevoegen</h3>
+
+                                        <input type="hidden" id="type" name="type" value="add" />
+                                        <p>This is the first paragraph.</p>
+                                        <p>This is the second paragraph.</p>
+                                        <p>This is the third paragraph.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3"><h6 class="mb-0">Naam</h6></div>
+                                    <div class="col-sm-9 text-secondary"><%= details[0]['name'] %></div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-3"><h6 class="mb-0">category</h6></div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <i class="fa-solid fa-tag"></i> <%= details[0]['category'] %>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-3"><h6 class="mb-0">Kleur</h6></div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <b><%= details[0]['color'] %></b>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-3"><h6 class="mb-0">Size</h6></div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <b><%= details[0]['size'] %></b>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-3"><h6 class="mb-0">Amount</h6></div>
+                                    <div
+                                        class="col-sm-9 <% if(details[0]['amount'] < 0){%> text-danger <%}else{%> text-secondary <%} %>"
+                                    >
+                                        <b><%= details[0]['amount'] %></b>
+                                    </div>
+                                </div>
+                                <!-- <hr />
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <a
+                                            class="btn btn-info"
+                                            target="__blank"
+                                            href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills"
+                                            >Edit</a
+                                        >
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin: auto">
+            <div id="card-div" class="col-md-12" style="margin-top: 40px !important">
+                <table id="table_id" class="table table-striped" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>new Total</th>
+                            <th>old Total</th>
+                            <th>Diff</th>
+                            <th>last_modified_dt</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>new Total</th>
+                            <th>old Total</th>
+                            <th>Diff</th>
+                            <th>last_modified_dt</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <%- include('includes/footer'); %>
+
+        <!-- importing bootstrap.js and supporting js libraries -->
+        <script src="/js/jquery.min.js"></script>
+        <script src="/jquery.dataTables.min.js"></script>
+        <script src="/js/dataTables.bootstrap5.min.js"></script>
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                // Create search inputs in footer
+                $('#table_id tfoot th').each(function () {
+                    var title = $(this).text();
+                    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+                });
+
+                // DataTable initialisation
+                var table = $('#table_id').DataTable({
+                    paging: true,
+                    autoWidth: true,
+                    ajax: {
+                        type: 'GET',
+                        url: 'https://localhost:8080/api/products/history/<%= id %>',
+                        dataSrc: function (json) {
+                            console.log(json);
+                            return json;
+                        },
+                    },
+
+                    columns: [
+                        { data: 'new_amount' },
+                        { data: 'old_amount' },
+                        { data: 'diff_amount' },
+                        { data: 'last_modified_dt' },
+                    ],
+                    aaSorting: [],
+                    createdRow: function (row, data, index) {
+                        if (data['diff_amount'] > 0) {
+                            $('td', row).eq(2).addClass('text-success font-weight-bold');
+                        }
+                    },
+                    initComplete: function (settings, json) {
+                        var footer = $('#table_id tfoot tr');
+                        $('#table_id thead').append(footer);
+
+                        this.api()
+                            .columns(2)
+                            .every(function () {
+                                var column = this;
+                                var select = $('<select><option value="">Select verschil</option></select>')
+                                    .appendTo($(column.footer()).empty())
+                                    .on('change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                    });
+
+                                column
+                                    .data()
+                                    .unique()
+                                    .sort()
+                                    .each(function (d, j) {
+                                        select.append('<option value="' + d + '">' + d + '</option>');
+                                    });
+                            });
+                    },
+                });
+                // Apply the search
+                $('#table_id thead').on('keyup', 'input', function () {
+                    table.column($(this).parent().index()).search(this.value).draw();
+                });
+
+                $('.btn-primary').on('click', function () {
+                    $('.collapse').collapse('hide');
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -25,17 +25,17 @@
 --     )
 -- VALUES
 --     (
---         'Test',
+--         'wollen sokken 2',
 --         'sokken',
---         'geel',
---         'XS'
+--         'rood',
+--         'S'
 --     );
 
 
 UPDATE products SET
-    amount = 9
+    amount = -1
     WHERE 
-    id = 1;
+    id = 4;
 
 
 -- CREATE TABLE product_history

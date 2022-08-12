@@ -23,7 +23,19 @@ const getRoutes = (mainController, router) => {
     //     throw new Error('My first Sentry error!');
     // });
 
+    // Pages
     router.get('/home', mainController.getHomePage);
+    router.get('/details/:id', mainController.getDetailsPage);
+    router.get('/edit-products', mainController.getEditPage);
+
+    // API
+    router.get('/api/products', mainController.getAllProducts);
+
+    router.get('/api/products/history/:id', mainController.getProductHistory);
+
+    // router.get('/api/products/:id', mainController.getProductDetails);
+    router.post('/api/products/:id', mainController.putProduct);
+    router.delete('/api/products/:id', mainController.delProduct);
 
     // router.post(
     //     '/uploadCSV',
