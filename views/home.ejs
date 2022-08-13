@@ -30,22 +30,22 @@
                 <table id="table_id" class="table table-striped" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>name</th>
-                            <th>category</th>
-                            <th>color</th>
-                            <th>size</th>
-                            <th>amount</th>
-                            <th>Action</th>
+                            <th>Naam</th>
+                            <th>Categorie</th>
+                            <th>Kleur</th>
+                            <th>Maat</th>
+                            <th>Hoeveelheid</th>
+                            <th>Bekijk Product</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>name</th>
-                            <th>category</th>
-                            <th>color</th>
-                            <th>size</th>
-                            <th>amount</th>
-                            <th>Action</th>
+                            <th>Naam</th>
+                            <th>Categorie</th>
+                            <th>Kleur</th>
+                            <th>Maat</th>
+                            <th>Hoeveelheid</th>
+                            <th>Bekijk Product</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -63,10 +63,16 @@
 
         <script>
             $(document).ready(function () {
+                $.fn.dataTable.ext.errMode = 'none';
+
+                $('#table_id').on('error.dt', function (e, settings, techNote, message) {
+                    console.log('An error has been reported by DataTables: ', message);
+                });
+
                 // Create search inputs in footer
                 $('#table_id tfoot th').each(function () {
                     var title = $(this).text();
-                    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+                    $(this).html('<input type="text" placeholder="Zoek ' + title + '" />');
                 });
 
                 // DataTable initialisation

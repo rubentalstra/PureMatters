@@ -171,20 +171,20 @@
                 <table id="table_id" class="table table-striped" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>id</th>
-                            <th>new Total</th>
-                            <th>old Total</th>
-                            <th>Diff</th>
-                            <th>last_modified_dt</th>
+                            <th>Index</th>
+                            <th>Nieuwe Voorraad</th>
+                            <th>Oude Voorraad</th>
+                            <th>Transactie</th>
+                            <th>Datum</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>id</th>
-                            <th>new Total</th>
-                            <th>old Total</th>
-                            <th>Diff</th>
-                            <th>last_modified_dt</th>
+                            <th>Index</th>
+                            <th>Nieuwe Voorraad</th>
+                            <th>Oude Voorraad</th>
+                            <th>Transactie</th>
+                            <th>Datum</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -202,6 +202,12 @@
 
         <script>
             $(document).ready(function () {
+                $.fn.dataTable.ext.errMode = 'none';
+
+                $('#table_id').on('error.dt', function (e, settings, techNote, message) {
+                    console.log('An error has been reported by DataTables: ', message);
+                });
+
                 // Create search inputs in footer
                 $('#table_id tfoot th').each(function () {
                     var title = $(this).text();

@@ -37,22 +37,22 @@
                 <table id="table_id" class="table table-striped" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>name</th>
-                            <th>category</th>
-                            <th>color</th>
-                            <th>size</th>
-                            <th>amount</th>
-                            <th>Action</th>
+                            <th>Naam</th>
+                            <th>Categorie</th>
+                            <th>Kleur</th>
+                            <th>Maat</th>
+                            <th>Hoeveelheid</th>
+                            <th>Product Bewerken</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>name</th>
-                            <th>category</th>
-                            <th>color</th>
-                            <th>size</th>
-                            <th>amount</th>
-                            <th>Action</th>
+                            <th>Naam</th>
+                            <th>Categorie</th>
+                            <th>Kleur</th>
+                            <th>Maat</th>
+                            <th>Hoeveelheid</th>
+                            <th>Product Bewerken</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -77,7 +77,7 @@
                         enctype="application/x-www-form-urlencoded"
                     >
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                            <h5 class="modal-title" id="staticBackdropLabel">Product Verwijderen</h5>
                             <button
                                 type="button"
                                 class="btn-close"
@@ -87,12 +87,13 @@
                         </div>
                         <div class="modal-body">
                             <input type="hidden" id="get_id" name="pid" value="" />
+                            Weet u zeker dat u het product wil verwijderen?
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Close
+                                Cancel
                             </button>
-                            <button type="submit" class="btn btn-primary">Understood</button>
+                            <button type="submit" class="btn btn-primary">Ja</button>
                         </div>
                     </form>
                 </div>
@@ -114,10 +115,16 @@
                     document.getElementById('get_id').value = $(this).attr('data-id');
                 });
 
+                $.fn.dataTable.ext.errMode = 'none';
+
+                $('#table_id').on('error.dt', function (e, settings, techNote, message) {
+                    console.log('An error has been reported by DataTables: ', message);
+                });
+
                 // Create search inputs in footer
                 $('#table_id tfoot th').each(function () {
                     var title = $(this).text();
-                    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+                    $(this).html('<input type="text" placeholder="Zoek ' + title + '" />');
                 });
 
                 // DataTable initialisation
