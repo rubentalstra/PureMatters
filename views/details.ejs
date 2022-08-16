@@ -263,10 +263,10 @@
                         $('#table_id thead').append(footer);
 
                         this.api()
-                            .columns(2)
+                            .columns(3)
                             .every(function () {
                                 var column = this;
-                                var select = $('<select><option value="">Select verschil</option></select>')
+                                var select = $('<select><option value="">Select Transactie</option></select>')
                                     .appendTo($(column.footer()).empty())
                                     .on('change', function () {
                                         var val = $.fn.dataTable.util.escapeRegex($(this).val());
