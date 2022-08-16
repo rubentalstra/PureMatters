@@ -32,20 +32,23 @@
 
                                         <br />
                                         <p class="text-muted font-size-sm"></p>
-                                        <button
-                                            class="btn btn-primary"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#sold"
-                                        >
-                                            <i class="fa-solid fa-bag-shopping"></i> Product Verkocht
-                                        </button>
-                                        <button
-                                            class="btn btn-primary"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#newStock"
-                                        >
-                                            <i class="fa-solid fa-box-open"></i> Voorraad Toevoegen
-                                        </button>
+
+                                        <div class="btn-group mr-2" role="group" aria-label="Third group">
+                                            <button
+                                                class="btn btn-primary"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#sold"
+                                            >
+                                                <i class="fa-solid fa-bag-shopping"></i> Product Verkocht
+                                            </button>
+                                            <button
+                                                class="btn btn-outline-primary"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#newStock"
+                                            >
+                                                <i class="fa-solid fa-box-open"></i> Voorraad Toevoegen
+                                            </button>
+                                        </div>
                                     </div>
                                     <div id="sold" class="collapse">
                                         <br />
@@ -120,7 +123,7 @@
                                 </div>
                                 <hr />
                                 <div class="row">
-                                    <div class="col-sm-3"><h6 class="mb-0">category</h6></div>
+                                    <div class="col-sm-3"><h6 class="mb-0">Categorie</h6></div>
                                     <div class="col-sm-9 text-secondary">
                                         <i class="fa-solid fa-tag"></i> <%= details[0]['category'] %>
                                     </div>
@@ -134,14 +137,14 @@
                                 </div>
                                 <hr />
                                 <div class="row">
-                                    <div class="col-sm-3"><h6 class="mb-0">Size</h6></div>
+                                    <div class="col-sm-3"><h6 class="mb-0">Maat</h6></div>
                                     <div class="col-sm-9 text-secondary">
                                         <b><%= details[0]['size'] %></b>
                                     </div>
                                 </div>
                                 <hr />
                                 <div class="row">
-                                    <div class="col-sm-3"><h6 class="mb-0">Amount</h6></div>
+                                    <div class="col-sm-3"><h6 class="mb-0">Hoeveelheid</h6></div>
                                     <div
                                         class="col-sm-9 <% if(details[0]['amount'] < 0){%> text-danger <%}else{%> text-secondary <%} %>"
                                     >
@@ -286,7 +289,7 @@
                     table.column($(this).parent().index()).search(this.value).draw();
                 });
 
-                $('.btn-primary').on('click', function () {
+                $('.btn-primary, .btn-outline-primary').on('click', function () {
                     $('.collapse').collapse('hide');
                 });
             });
