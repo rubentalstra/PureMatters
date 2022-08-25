@@ -27,9 +27,17 @@
 
         <div class="row" style="margin: auto">
             <div id="card-div" class="col-md-12">
+                <!-- button to add new Product -->
+                <div class="col-md-11 text-right">
+                    <a class="btn btn-success" href="/add-products" role="button">
+                        <i class="fa-solid fa-plus"></i> Product Toevoegen
+                    </a>
+                </div>
+                <!-- DataTable -->
                 <table id="table_id" class="table table-striped" style="width: 100%">
                     <thead>
                         <tr>
+                            <th>Index</th>
                             <th>Naam</th>
                             <th>Categorie</th>
                             <th>Kleur</th>
@@ -40,12 +48,13 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Naam</th>
-                            <th>Categorie</th>
+                            <th></th>
+                            <th class="text_search">Naam</th>
+                            <th class="text_search">Categorie</th>
                             <th>Kleur</th>
                             <th>Maat</th>
-                            <th>Hoeveelheid</th>
-                            <th>Bekijk Product</th>
+                            <th class="text_search">Hoeveelheid</th>
+                            <th></th>
                         </tr>
                     </tfoot>
                 </table>
@@ -72,13 +81,16 @@
                 // Create search inputs in footer
                 $('#table_id tfoot th').each(function () {
                     var title = $(this).text();
-                    $(this).html('<input type="text" placeholder="Zoek ' + title + '" />');
+                    if ($(this)[0].className === 'text_search') {
+                        $(this).html('<input type="text" placeholder="Zoek ' + title + '" />');
+                    }
                 });
-
                 // DataTable initialisation
                 var table = $('#table_id').DataTable({
                     paging: true,
                     autoWidth: true,
+                    pageLength: 100,
+                    lengthMenu: [5, 10, 20, 50, 100, 200, 500],
                     ajax: {
                         type: 'GET',
                         url: '/api/products',
@@ -89,6 +101,12 @@
                     },
                     aaSorting: [],
                     columns: [
+                        {
+                            data: 'Index',
+                            render: function (data, type, full, meta) {
+                                return meta.row + 1;
+                            },
+                        },
                         { data: 'name' },
                         { data: 'category' },
                         { data: 'color' },
@@ -105,9 +123,12 @@
                             },
                         },
                     ],
+
+                    columnDefs: [{ width: 10, targets: 0 }],
+
                     createdRow: function (row, data, index) {
                         if (data['amount'] < 0) {
-                            $('td', row).eq(4).addClass('text-danger font-weight-bold');
+                            $('td', row).eq(5).addClass('text-danger font-weight-bold');
                         }
                     },
                     initComplete: function (settings, json) {
@@ -115,7 +136,7 @@
                         $('#table_id thead').append(footer);
 
                         this.api()
-                            .columns(2)
+                            .columns(3)
                             .every(function () {
                                 var column = this;
                                 var select = $('<select><option value="">Select Kleur</option></select>')
@@ -136,7 +157,7 @@
                             });
 
                         this.api()
-                            .columns(3)
+                            .columns(4)
                             .every(function () {
                                 var column = this;
                                 var select = $('<select><option value="">Select Maat</option></select>')

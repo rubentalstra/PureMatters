@@ -152,17 +152,18 @@ exports.putProduct = async (req, res) => {
 };
 
 exports.createProduct = async (req, res) => {
-    const { name, category, color, size } = req.body;
+    const { name, category, color, size, amount } = req.body;
 
     // console.log(name);
     // console.log(category);
     // console.log(color);
     // console.log(size);
+    // console.log(amount);
 
     try {
         poolPromise.query(
-            'INSERT INTO products(name,category,color,size)VALUES(?,?,?,?)',
-            [name, category, color, size],
+            'INSERT INTO products(name,category,color,size,amount)VALUES(?,?,?,?,?)',
+            [name, category, color, size, amount],
             function (err, result) {
                 if (err) {
                     throw err;
