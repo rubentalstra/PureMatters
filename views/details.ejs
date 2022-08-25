@@ -14,6 +14,12 @@
 
         <link rel="stylesheet" href="/app.css" />
         <link rel="stylesheet" href="/style.css" />
+
+        <style>
+            .dataTables_filter {
+                display: none;
+            }
+        </style>
     </head>
 
     <body>
@@ -183,11 +189,11 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Index</th>
-                            <th>Nieuwe Voorraad</th>
-                            <th>Oude Voorraad</th>
+                            <th></th>
+                            <th class="text_search">Nieuwe Voorraad</th>
+                            <th class="text_search">Oude Voorraad</th>
                             <th>Transactie</th>
-                            <th>Datum</th>
+                            <th class="text_search">Datum</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -214,7 +220,9 @@
                 // Create search inputs in footer
                 $('#table_id tfoot th').each(function () {
                     var title = $(this).text();
-                    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+                    if ($(this)[0].className === 'text_search') {
+                        $(this).html('<input type="text" placeholder="Zoek ' + title + '" />');
+                    }
                 });
 
                 // DataTable initialisation
