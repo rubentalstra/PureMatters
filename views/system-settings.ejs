@@ -33,9 +33,9 @@
                 <div class="clearfix">
                     <div style="float: left"><h2>Categorie Lijst</h2></div>
                     <div style="float: right">
-                        <a class="btn btn-success" href="/add-products" role="button">
+                        <button type="button" class="btn btn-success createCategory">
                             <i class="fa-solid fa-plus"></i> Categorie Toevoegen
-                        </a>
+                        </button>
                     </div>
                 </div>
 
@@ -70,9 +70,9 @@
                 <div class="clearfix">
                     <div style="float: left"><h2>Fabrikanten Lijst</h2></div>
                     <div style="float: right">
-                        <a class="btn btn-success" href="/add-products" role="button">
+                        <button type="button" class="btn btn-success createManufacturer">
                             <i class="fa-solid fa-plus"></i> Fabrikant Toevoegen
-                        </a>
+                        </button>
                     </div>
                 </div>
 
@@ -100,98 +100,23 @@
             </div>
         </div>
 
-        <!-- Modal Delete Category -->
-        <div
-            class="modal fade"
-            id="delCategory"
-            data-bs-backdrop="static"
-            data-bs-keyboard="false"
-            tabindex="-1"
-            aria-labelledby="staticBackdropLabel"
-            aria-hidden="true"
-        >
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <form
-                        method="post"
-                        action="/api/settings/categories/delete"
-                        enctype="application/x-www-form-urlencoded"
-                    >
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Categorie Verwijderen</h5>
-                            <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            ></button>
-                        </div>
-                        <div class="modal-body">
-                            <input type="hidden" id="get_id" name="pid" value="" />
-                            Weet u zeker dat u Categorie:
-                            <input class="form-control" name="idkl" id="idkl" value="" disabled />
-                            wilt verwijderen?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Cancel
-                            </button>
-                            <button type="submit" class="btn btn-primary">Ja</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <!-- Modals categories -->
+        <!-- Create -->
+        <%- include('modals/categories/create'); %>
+        <!-- Edit -->
+        <%- include('modals/categories/edit'); %>
+        <!-- Delete -->
+        <%- include('modals/categories/delete'); %>
 
-        <!-- Modal Delete Manufacturers -->
-        <div
-            class="modal fade"
-            id="delManufacturers"
-            data-bs-backdrop="static"
-            data-bs-keyboard="false"
-            tabindex="-1"
-            aria-labelledby="staticBackdropLabel"
-            aria-hidden="true"
-        >
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <form
-                        method="post"
-                        action="/api/settings/manufacturers/delete"
-                        enctype="application/x-www-form-urlencoded"
-                    >
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Fabrikant Verwijderen</h5>
-                            <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            ></button>
-                        </div>
-                        <div class="modal-body">
-                            <input type="hidden" id="idManufacturer" name="idManufacturer" value="" />
-                            Weet u zeker dat u Fabrikant:
-                            <input
-                                class="form-control"
-                                name="nameManufacturer"
-                                id="nameManufacturer"
-                                value=""
-                                disabled
-                            />
-                            wilt verwijderen?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Cancel
-                            </button>
-                            <button type="submit" class="btn btn-primary">Ja</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <!-- Modals Manufacturers -->
+        <!-- Create -->
+        <%- include('modals/manufacturers/create'); %>
+        <!-- Edit -->
+        <%- include('modals/manufacturers/edit'); %>
+        <!-- Delete -->
+        <%- include('modals/manufacturers/delete'); %>
 
+        <!-- Footer -->
         <%- include('includes/footer'); %>
 
         <!-- importing bootstrap.js and supporting js libraries -->
@@ -203,12 +128,6 @@
 
         <script>
             $(document).ready(function () {
-                $('body').on('click', '.get-id', function () {
-                    document.getElementById('get_id').value = $(this).attr('data-id');
-                    var ids = $(this).attr('data-name');
-                    $('#idkl').val(ids);
-                });
-
                 $.fn.dataTable.ext.errMode = 'none';
 
                 // Category
@@ -252,11 +171,15 @@
                             data: 'id',
                             render: function (data, type, row, meta) {
                                 return (
-                                    '<a class="btn btn-warning mr-2" href="/edit/' +
+                                    ' <button type="button" class="btn btn-warning editCategory" edit-id="' +
                                     data +
-                                    '" role="button"><i class="fa-solid fa-pen"></i> Edit</a>' +
-                                    ' <button type="button" class="btn btn-danger delCategory" data-bs-toggle="modal" data-bs-target="#delCategory" data-id="' +
+                                    '" edit-name="' +
+                                    row['name'] +
+                                    '" ><i class="fa-solid fa-pen"></i> Edit</button>' +
+                                    ' <button type="button" class="btn btn-danger delCategory" data-id="' +
                                     data +
+                                    '" data-name="' +
+                                    row['name'] +
                                     '" ><i class="fa-solid fa-trash-can"></i> Delete</button>'
                                 );
                             },
@@ -282,14 +205,6 @@
                 // end Category
 
                 // Manufacturers
-
-                $('body').on('click', '.delManufacturer', function () {
-                    var name = $(this).attr('data-name');
-                    $('#nameManufacturer').val(name);
-                    var id = $(this).attr('data-id');
-                    $('#idManufacturer').val(id);
-                    $('#delManufacturers').modal('show');
-                });
 
                 $('#table_manufacturers').on('error.dt', function (e, settings, techNote, message) {
                     console.log('An error has been reported by DataTables: ', message);
@@ -331,9 +246,11 @@
                             data: 'id',
                             render: function (data, type, row, meta) {
                                 return (
-                                    '<a class="btn btn-warning mr-2" href="/edit/' +
+                                    ' <button type="button" class="btn btn-warning editManufacturer" edit-id="' +
                                     data +
-                                    '" role="button"><i class="fa-solid fa-pen"></i> Edit</a>' +
+                                    '" edit-name="' +
+                                    row['name'] +
+                                    '" ><i class="fa-solid fa-pen"></i> Edit</button>' +
                                     ' <button type="button" class="btn btn-danger delManufacturer" data-id="' +
                                     data +
                                     '" data-name="' +
@@ -361,6 +278,46 @@
                     $('select').val('');
                 });
                 // end Manufacturers
+
+                // Modals
+
+                /// Categories
+                $('body').on('click', '.createCategory', function () {
+                    $('#createCategory').modal('show');
+                });
+                $('body').on('click', '.editCategory', function () {
+                    var name = $(this).attr('edit-name');
+                    $('#nameEditCategory').val(name);
+                    var id = $(this).attr('edit-id');
+                    $('#idEditCategory').val(id);
+                    $('#editCategory').modal('show');
+                });
+                $('body').on('click', '.delCategory', function () {
+                    var name = $(this).attr('data-name');
+                    $('#nameDeleteCategory').val(name);
+                    var id = $(this).attr('data-id');
+                    $('#idDeleteCategory').val(id);
+                    $('#delCategory').modal('show');
+                });
+
+                // Manufacturers
+                $('body').on('click', '.createManufacturer', function () {
+                    $('#createManufacturers').modal('show');
+                });
+                $('body').on('click', '.editManufacturer', function () {
+                    var name = $(this).attr('edit-name');
+                    $('#nameEditManufacturer').val(name);
+                    var id = $(this).attr('edit-id');
+                    $('#idEditManufacturer').val(id);
+                    $('#editManufacturers').modal('show');
+                });
+                $('body').on('click', '.delManufacturer', function () {
+                    var name = $(this).attr('data-name');
+                    $('#nameDeleteManufacturer').val(name);
+                    var id = $(this).attr('data-id');
+                    $('#idDeleteManufacturer').val(id);
+                    $('#delManufacturers').modal('show');
+                });
             });
         </script>
     </body>

@@ -321,34 +321,36 @@ exports.getProductHistory = async (req, res) => {
 };
 
 // Category
-
 exports.createCategory = async (req, res) => {
-    const { name } = req.body;
+    const { nameCreateCategory } = req.body;
 
     try {
-        poolPromise.query('INSERT INTO category_list(name)VALUES(?)', [name], function (err, result) {
-            if (err) {
-                throw err;
-            }
-            if (result.affectedRows == 0) {
-                return res.sendStatus(400);
-            }
+        poolPromise.query(
+            'INSERT INTO category_list(name)VALUES(?)',
+            [nameCreateCategory],
+            function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                if (result.affectedRows == 0) {
+                    return res.sendStatus(400);
+                }
 
-            return res.render('system-settings');
-        });
+                return res.render('system-settings');
+            }
+        );
     } catch (error) {
         return console.log(error);
     }
 };
 
 exports.editCategory = async (req, res) => {
-    const { id } = req.params;
-    const { name } = req.body;
+    const { idEditCategory, nameEditCategory } = req.body;
 
     try {
         poolPromise.query(
             'UPDATE category_list SET name = ? WHERE id = ?',
-            [name, id],
+            [nameEditCategory, idEditCategory],
             function (err, result) {
                 if (err) {
                     throw err;
@@ -366,7 +368,7 @@ exports.editCategory = async (req, res) => {
 };
 
 exports.delCategory = async (req, res) => {
-    const id = req.body.pid;
+    const id = req.body.idDeleteCategory;
 
     try {
         poolPromise.query('DELETE FROM category_list WHERE id = ?', [id], function (err, result) {
@@ -385,34 +387,36 @@ exports.delCategory = async (req, res) => {
 };
 
 // Manufacture
-
 exports.createManufacture = async (req, res) => {
-    const { name } = req.body;
+    const { nameCreateManufacturer } = req.body;
 
     try {
-        poolPromise.query('INSERT INTO manufacturers_list(name)VALUES(?)', [name], function (err, result) {
-            if (err) {
-                throw err;
-            }
-            if (result.affectedRows == 0) {
-                return res.sendStatus(400);
-            }
+        poolPromise.query(
+            'INSERT INTO manufacturers_list(name)VALUES(?)',
+            [nameCreateManufacturer],
+            function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                if (result.affectedRows == 0) {
+                    return res.sendStatus(400);
+                }
 
-            return res.render('system-settings');
-        });
+                return res.render('system-settings');
+            }
+        );
     } catch (error) {
         return console.log(error);
     }
 };
 
 exports.editManufacture = async (req, res) => {
-    const { id } = req.params;
-    const { name } = req.body;
+    const { idEditManufacturer, nameEditManufacturer } = req.body;
 
     try {
         poolPromise.query(
             'UPDATE manufacturers_list SET name = ? WHERE id = ?',
-            [name, id],
+            [nameEditManufacturer, idEditManufacturer],
             function (err, result) {
                 if (err) {
                     throw err;
@@ -430,7 +434,7 @@ exports.editManufacture = async (req, res) => {
 };
 
 exports.delManufacture = async (req, res) => {
-    const id = req.body.idManufacturer;
+    const id = req.body.idDeleteManufacturer;
 
     console.log(id);
 

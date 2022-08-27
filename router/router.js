@@ -49,12 +49,12 @@ const getRoutes = (mainController, router) => {
     /// Category
     router.get('/api/settings/categories', mainController.getAllCategories);
     router.post('/api/settings/categories/create', mainController.createCategory);
-    router.post('/api/settings/categories/edit/:id', mainController.editCategory);
+    router.post('/api/settings/categories/edit', mainController.editCategory);
     router.post('/api/settings/categories/delete', mainController.delCategory);
     /// Manufacturer
     router.get('/api/settings/manufacturers', mainController.getAllManufacturers);
     router.post('/api/settings/manufacturers/create', mainController.createManufacture);
-    router.post('/api/settings/manufacturers/edit/:id', mainController.editManufacture);
+    router.post('/api/settings/manufacturers/edit', mainController.editManufacture);
     router.post('/api/settings/manufacturers/delete', mainController.delManufacture);
 
     // The error handler must be before any other error middleware and after all controllers
