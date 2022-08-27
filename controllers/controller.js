@@ -83,22 +83,6 @@ exports.getAllProducts = async (req, res) => {
     }
 };
 
-// exports.getProductDetails = async (req, res) => {
-//     const { id } = req.params;
-
-//     try {
-//         poolPromise.query('SELECT * FROM products WHERE id = ?', [id], function (err, result) {
-//             if (err) {
-//                 throw err;
-//             }
-//             // console.log(result);
-//             return res.json(result);
-//         });
-//     } catch (error) {
-//         return console.log(error);
-//     }
-// };
-
 exports.putProduct = async (req, res) => {
     const { id } = req.params;
 
@@ -171,7 +155,7 @@ exports.putProduct = async (req, res) => {
 };
 
 exports.createProduct = async (req, res) => {
-    const { name, category, color, size, amount } = req.body;
+    const { name, sex, category, color, size, amount } = req.body;
 
     // console.log(name);
     // console.log(category);
@@ -181,8 +165,8 @@ exports.createProduct = async (req, res) => {
 
     try {
         poolPromise.query(
-            'INSERT INTO products(name,category,color,size,amount)VALUES(?,?,?,?,?)',
-            [name, category, color, size, amount],
+            'INSERT INTO products(name,sex,category,color,size,amount)VALUES(?,?,?,?,?,?)',
+            [name, sex, category, color, size, amount],
             function (err, result) {
                 if (err) {
                     throw err;
@@ -201,7 +185,7 @@ exports.createProduct = async (req, res) => {
 
 exports.editProduct = async (req, res) => {
     const { id } = req.params;
-    const { name, category, color, size } = req.body;
+    const { name, sex, category, color, size } = req.body;
 
     // console.log(name);
     // console.log(category);
@@ -210,8 +194,8 @@ exports.editProduct = async (req, res) => {
 
     try {
         poolPromise.query(
-            'UPDATE products SET name = ?, category = ?, color = ?, size = ? WHERE id = ?',
-            [name, category, color, size, id],
+            'UPDATE products SET name = ?, sex = ?, category = ?, color = ?, size = ? WHERE id = ?',
+            [name, sex, category, color, size, id],
             function (err, result) {
                 if (err) {
                     throw err;
@@ -229,7 +213,7 @@ exports.editProduct = async (req, res) => {
 };
 
 exports.duplicateProduct = async (req, res) => {
-    const { name, category, color, size, amount } = req.body;
+    const { name, sex, category, color, size, amount } = req.body;
 
     // console.log(name);
     // console.log(category);
@@ -239,8 +223,8 @@ exports.duplicateProduct = async (req, res) => {
 
     try {
         poolPromise.query(
-            'INSERT INTO products(name,category,color,size,amount)VALUES(?,?,?,?,?)',
-            [name, category, color, size, amount],
+            'INSERT INTO products(name,sex,category,color,size,amount)VALUES(?,?,?,?,?,?)',
+            [name, sex, category, color, size, amount],
             function (err, result) {
                 if (err) {
                     throw err;

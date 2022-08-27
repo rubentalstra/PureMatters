@@ -39,6 +39,7 @@
                         <tr>
                             <th>Index</th>
                             <th>Naam</th>
+                            <th>Geslacht</th>
                             <th>Categorie</th>
                             <th>Kleur</th>
                             <th>Maat</th>
@@ -50,6 +51,7 @@
                         <tr>
                             <th></th>
                             <th class="text_search">Naam</th>
+                            <th>Geslacht</th>
                             <th class="text_search">Categorie</th>
                             <th>Kleur</th>
                             <th>Maat</th>
@@ -108,6 +110,7 @@
                             },
                         },
                         { data: 'name' },
+                        { data: 'sex' },
                         { data: 'category' },
                         { data: 'color' },
                         { data: 'size' },
@@ -134,6 +137,27 @@
                     initComplete: function (settings, json) {
                         var footer = $('#table_id tfoot tr');
                         $('#table_id thead').append(footer);
+
+                        this.api()
+                            .columns(2)
+                            .every(function () {
+                                var column = this;
+                                var select = $('<select><option value="">Select Geslacht</option></select>')
+                                    .appendTo($(column.footer()).empty())
+                                    .on('change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                    });
+
+                                column
+                                    .data()
+                                    .unique()
+                                    .sort()
+                                    .each(function (d, j) {
+                                        select.append('<option value="' + d + '">' + d + '</option>');
+                                    });
+                            });
 
                         this.api()
                             .columns(3)
