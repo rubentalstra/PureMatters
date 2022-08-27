@@ -43,7 +43,7 @@
                             <th>Categorie</th>
                             <th>Kleur</th>
                             <th>Maat</th>
-                            <th>Hoeveelheid</th>
+                            <!-- <th>Hoeveelheid</th> -->
                             <th>Product Bewerken</th>
                         </tr>
                     </thead>
@@ -55,13 +55,11 @@
                             <th class="text_search">Categorie</th>
                             <th>Kleur</th>
                             <th>Maat</th>
-                            <th>Hoeveelheid</th>
+                            <!-- <th>Hoeveelheid</th> -->
                             <th>
-                                <!-- <div class="col-md-11 text-center">
-                                    <a class="btn btn-success" href="/add-products" role="button">
-                                        <i class="fa-solid fa-plus"></i> Product Toevoegen
-                                    </a>
-                                </div> -->
+                                <button type="button" class="btn btn-secondary" id="clearFilter">
+                                    <i class="fa-solid fa-eraser"></i> Clear
+                                </button>
                             </th>
                         </tr>
                     </tfoot>
@@ -169,7 +167,6 @@
                         { data: 'category' },
                         { data: 'color' },
                         { data: 'size' },
-                        { data: 'amount' },
                         {
                             data: 'id',
                             render: function (data, type, row, meta) {
@@ -193,11 +190,11 @@
                         // { width: 100, targets: 7 },
                     ],
 
-                    createdRow: function (row, data, index) {
-                        if (data['amount'] < 0) {
-                            $('td', row).eq(6).addClass('text-danger font-weight-bold');
-                        }
-                    },
+                    // createdRow: function (row, data, index) {
+                    //     if (data['amount'] < 0) {
+                    //         $('td', row).eq(6).addClass('text-danger font-weight-bold');
+                    //     }
+                    // },
 
                     initComplete: function (settings, json) {
                         var footer = $('#table_id tfoot tr');
@@ -270,6 +267,13 @@
                 // Apply the search
                 $('#table_id thead').on('keyup', 'input', function () {
                     table.column($(this).parent().index()).search(this.value).draw();
+                });
+
+                $('#clearFilter').click(function () {
+                    // $('#table_id').DataTable().search('').draw();
+                    table.search('').columns().search('').draw();
+                    $('input:text').val('');
+                    $('select').val('');
                 });
             });
         </script>

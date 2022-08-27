@@ -56,7 +56,11 @@
                             <th>Kleur</th>
                             <th>Maat</th>
                             <th>Hoeveelheid</th>
-                            <th></th>
+                            <th>
+                                <button type="button" class="btn btn-secondary" id="clearFilter">
+                                    <i class="fa-solid fa-eraser"></i> Clear
+                                </button>
+                            </th>
                         </tr>
                     </tfoot>
                 </table>
@@ -119,7 +123,7 @@
                             data: 'id',
                             render: function (data, type, row, meta) {
                                 return (
-                                    '<a class="btn btn-secondary" href="/details/' +
+                                    '<a class="btn btn-primary" href="/details/' +
                                     data +
                                     '" role="button"><i class="fa-solid fa-shirt"></i> Show </a>'
                                 );
@@ -205,6 +209,13 @@
                 // Apply the search
                 $('#table_id thead').on('keyup', 'input', function () {
                     table.column($(this).parent().index()).search(this.value).draw();
+                });
+
+                $('#clearFilter').click(function () {
+                    // $('#table_id').DataTable().search('').draw();
+                    table.search('').columns().search('').draw();
+                    $('input:text').val('');
+                    $('select').val('');
                 });
             });
         </script>
