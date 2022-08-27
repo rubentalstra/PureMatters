@@ -135,7 +135,9 @@
                 $('#table_id tfoot th').each(function () {
                     var title = $(this).text();
                     if ($(this)[0].className === 'text_search') {
-                        $(this).html('<input type="text" placeholder="Zoek ' + title + '" />');
+                        $(this).html(
+                            '<input type="text" style="width:150px" placeholder="Zoek ' + title + '" />'
+                        );
                     }
                 });
 
