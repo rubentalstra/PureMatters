@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" status="width=device-width, initial-scale=1.0" />
+
+        <title>PureMatters Inventory - System settings</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+        <link href="/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+        <script defer src="/fontawesome/js/all.js"></script>
+
+        <link rel="stylesheet" href="/app.css" />
+        <link rel="stylesheet" href="/style.css" />
+
+        <style>
+            .dataTables_filter {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <%- include('includes/navbar', {}); %>
+
+        <div class="row" style="margin: auto">
+            <div id="card-div" class="col-md-12">
+                <!-- button to add new Product -->
+                <div class="col-md-11 text-right">
+                    <a class="btn btn-success" href="/add-products" role="button">
+                        <i class="fa-solid fa-plus"></i> Product Toevoegen
+                    </a>
+                </div>
+                <!-- DataTable -->
+                <table id="table_id" class="table table-striped" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Naam</th>
+                            <th>Geslacht</th>
+                            <th>Categorie</th>
+                            <th>Kleur</th>
+                            <th>Maat</th>
+                            <!-- <th>Hoeveelheid</th> -->
+                            <th>Product Bewerken</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th class="text_search">Naam</th>
+                            <th>Geslacht</th>
+                            <th class="text_search">Categorie</th>
+                            <th>Kleur</th>
+                            <th>Maat</th>
+                            <!-- <th>Hoeveelheid</th> -->
+                            <th>
+                                <button type="button" class="btn btn-secondary" id="clearFilter">
+                                    <i class="fa-solid fa-eraser"></i> Clear
+                                </button>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div
+            class="modal fade"
+            id="staticBackdrop"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="staticBackdropLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form
+                        method="post"
+                        action="/api/products/delete"
+                        enctype="application/x-www-form-urlencoded"
+                    >
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Product Verwijderen</h5>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="get_id" name="pid" value="" />
+                            Weet u zeker dat u het product wil verwijderen?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary">Ja</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <%- include('includes/footer'); %>
+
+        <!-- importing bootstrap.js and supporting js libraries -->
+        <script src="/js/jquery.min.js"></script>
+        <script src="/jquery.dataTables.min.js"></script>
+        <script src="/js/dataTables.bootstrap5.min.js"></script>
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('body').on('click', '.get-id', function () {
+                    document.getElementById('get_id').value = $(this).attr('data-id');
+                });
+
+                $.fn.dataTable.ext.errMode = 'none';
+
+                $('#table_id').on('error.dt', function (e, settings, techNote, message) {
+                    console.log('An error has been reported by DataTables: ', message);
+                });
+
+                // Create search inputs in footer
+                $('#table_id tfoot th').each(function () {
+                    var title = $(this).text();
+                    if ($(this)[0].className === 'text_search') {
+                        $(this).html(
+                            '<input type="text" style="width:150px" placeholder="Zoek ' + title + '" />'
+                        );
+                    }
+                });
+
+                // DataTable initialisation
+                var table = $('#table_id').DataTable({
+                    paging: true,
+                    autoWidth: true,
+                    pageLength: 5,
+                    lengthMenu: [0, 5, 10],
+                    ajax: {
+                        type: 'GET',
+                        url: '/api/products',
+                        dataSrc: function (json) {
+                            console.log(json);
+                            return json;
+                        },
+                    },
+
+                    aaSorting: [],
+                    columns: [
+                        {
+                            data: 'Index',
+                            render: function (data, type, full, meta) {
+                                return meta.row + 1;
+                            },
+                        },
+                        { data: 'name' },
+                        { data: 'sex' },
+                        { data: 'category' },
+                        { data: 'color' },
+                        { data: 'size' },
+                        {
+                            data: 'id',
+                            render: function (data, type, row, meta) {
+                                return (
+                                    '<a class="btn btn-info mr-2" href="/duplicate/' +
+                                    data +
+                                    '" role="button"><i class="fa-solid fa-copy"></i></a>' +
+                                    '<a class="btn btn-warning mr-2" href="/edit/' +
+                                    data +
+                                    '" role="button"><i class="fa-solid fa-pen"></i></a>' +
+                                    ' <button type="button" class="btn btn-danger get-id" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-id="' +
+                                    data +
+                                    '"><i class="fa-solid fa-trash-can"></i></button>'
+                                );
+                            },
+                        },
+                    ],
+                    columnDefs: [
+                        { width: 10, targets: 0 },
+
+                        // { width: 100, targets: 7 },
+                    ],
+
+                    // createdRow: function (row, data, index) {
+                    //     if (data['amount'] < 0) {
+                    //         $('td', row).eq(6).addClass('text-danger font-weight-bold');
+                    //     }
+                    // },
+
+                    initComplete: function (settings, json) {
+                        var footer = $('#table_id tfoot tr');
+                        $('#table_id thead').append(footer);
+
+                        this.api()
+                            .columns(2)
+                            .every(function () {
+                                var column = this;
+                                var select = $('<select><option value="">Select Geslacht</option></select>')
+                                    .appendTo($(column.footer()).empty())
+                                    .on('change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                    });
+
+                                column
+                                    .data()
+                                    .unique()
+                                    .sort()
+                                    .each(function (d, j) {
+                                        select.append('<option value="' + d + '">' + d + '</option>');
+                                    });
+                            });
+
+                        this.api()
+                            .columns(4)
+                            .every(function () {
+                                var column = this;
+                                var select = $('<select><option value="">Select Kleur</option></select>')
+                                    .appendTo($(column.footer()).empty())
+                                    .on('change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                    });
+
+                                column
+                                    .data()
+                                    .unique()
+                                    .sort()
+                                    .each(function (d, j) {
+                                        select.append('<option value="' + d + '">' + d + '</option>');
+                                    });
+                            });
+
+                        this.api()
+                            .columns(5)
+                            .every(function () {
+                                var column = this;
+                                var select = $('<select><option value="">Select Maat</option></select>')
+                                    .appendTo($(column.footer()).empty())
+                                    .on('change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                    });
+
+                                column
+                                    .data()
+                                    .unique()
+                                    .sort()
+                                    .each(function (d, j) {
+                                        select.append('<option value="' + d + '">' + d + '</option>');
+                                    });
+                            });
+                    },
+                });
+                // Apply the search
+                $('#table_id thead').on('keyup', 'input', function () {
+                    table.column($(this).parent().index()).search(this.value).draw();
+                });
+
+                $('#clearFilter').click(function () {
+                    // $('#table_id').DataTable().search('').draw();
+                    table.search('').columns().search('').draw();
+                    $('input:text').val('');
+                    $('select').val('');
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -33,6 +33,9 @@ const getRoutes = (mainController, router) => {
     router.get('/duplicate/:id', mainController.getDuplicatePage);
     // router.get('/edit-products', mainController.getEditPage);
 
+    // system settings
+    router.get('/system-settings', mainController.getSystemSettingsPage);
+
     // API
     router.get('/api/products', mainController.getAllProducts);
     router.post('/api/products/create', mainController.createProduct);

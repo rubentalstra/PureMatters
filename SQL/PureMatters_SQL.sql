@@ -75,3 +75,37 @@
 -- SET c3 = c3 + 1
 -- WHERE id IN (SELECT DISTINCT id FROM inserted)
 -- END;
+
+
+-- CREATE TABLE manufacturers_list
+-- (
+--     id int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT'ID',
+--     name VARCHAR(255) NOT NULL COMMENT 'name',
+--     create_time DATETIME COMMENT 'Create Time' NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     update_time DATETIME COMMENT 'Update Time' NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+--     UPDATE CURRENT_TIMESTAMP
+--     ) DEFAULT CHARSET UTF8 COMMENT 'manufacturers_list';
+
+-- INSERT INTO products
+--     (
+--     name,
+--     category,
+--     color,
+--     size
+--     )
+-- VALUES
+--     (
+--         'wollen sokken 2',
+--         'sokken',
+--         'rood',
+--         'S'
+--     );
+
+-- CREATE TABLE category_list
+-- (
+--     id int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT'ID',
+--     name VARCHAR(255) NOT NULL COMMENT 'name',
+--     create_time DATETIME COMMENT 'Create Time' NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     update_time DATETIME COMMENT 'Update Time' NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+--     UPDATE CURRENT_TIMESTAMP
+--     ) DEFAULT CHARSET UTF8 COMMENT 'category_list';

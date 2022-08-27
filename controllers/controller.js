@@ -31,6 +31,10 @@ exports.getAddPage = (req, res) => {
     return res.render('add');
 };
 
+exports.getSystemSettingsPage = (req, res) => {
+    return res.render('system-settings');
+};
+
 exports.getEditPage = (req, res) => {
     const { id } = req.params;
 
