@@ -34,10 +34,21 @@ exports.getAddPage = (req, res) => {
                 throw err;
             }
             // console.log(result);
-            const list = JSON.parse(JSON.stringify(result));
 
-            // console.log(list);
-            return res.render('add', { list });
+            const categoryList = JSON.parse(JSON.stringify(result));
+            poolPromise.query('SELECT * FROM manufacturers_list', function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                // console.log(result);
+
+                const manufacturersList = JSON.parse(JSON.stringify(result));
+
+                // console.log(categoryList);
+                // console.log(manufacturersList);
+
+                return res.render('add', { manufacturersList, categoryList });
+            });
         });
     } catch (error) {
         return console.log(error);
@@ -56,10 +67,33 @@ exports.getEditPage = (req, res) => {
             if (err) {
                 throw err;
             }
-            // console.log(result);
-            return res.render('edit', {
-                id: id,
-                product: JSON.parse(JSON.stringify(result)),
+            const product = JSON.parse(JSON.stringify(result));
+
+            poolPromise.query('SELECT * FROM category_list', function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                // console.log(result);
+
+                const categoryList = JSON.parse(JSON.stringify(result));
+                poolPromise.query('SELECT * FROM manufacturers_list', function (err, result) {
+                    if (err) {
+                        throw err;
+                    }
+                    // console.log(result);
+
+                    const manufacturersList = JSON.parse(JSON.stringify(result));
+
+                    // console.log(categoryList);
+                    // console.log(manufacturersList);
+
+                    return res.render('edit', {
+                        id: id,
+                        product: product,
+                        manufacturersList: manufacturersList,
+                        categoryList: categoryList,
+                    });
+                });
             });
         });
     } catch (error) {
@@ -75,10 +109,33 @@ exports.getDuplicatePage = async (req, res) => {
             if (err) {
                 throw err;
             }
-            // console.log(result);
-            return res.render('duplicate', {
-                id: id,
-                product: JSON.parse(JSON.stringify(result)),
+            const product = JSON.parse(JSON.stringify(result));
+
+            poolPromise.query('SELECT * FROM category_list', function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                // console.log(result);
+
+                const categoryList = JSON.parse(JSON.stringify(result));
+                poolPromise.query('SELECT * FROM manufacturers_list', function (err, result) {
+                    if (err) {
+                        throw err;
+                    }
+                    // console.log(result);
+
+                    const manufacturersList = JSON.parse(JSON.stringify(result));
+
+                    // console.log(categoryList);
+                    // console.log(manufacturersList);
+
+                    return res.render('duplicate', {
+                        id: id,
+                        product: product,
+                        manufacturersList: manufacturersList,
+                        categoryList: categoryList,
+                    });
+                });
             });
         });
     } catch (error) {
@@ -200,7 +257,7 @@ exports.putProduct = async (req, res) => {
 };
 
 exports.createProduct = async (req, res) => {
-    const { name, sex, category, color, size, amount } = req.body;
+    const { name, manufacturer, sex, category, color, size, amount } = req.body;
 
     // console.log(name);
     // console.log(category);
@@ -210,8 +267,8 @@ exports.createProduct = async (req, res) => {
 
     try {
         poolPromise.query(
-            'INSERT INTO products(name,sex,category,color,size,amount)VALUES(?,?,?,?,?,?)',
-            [name, sex, category, color, size, amount],
+            'INSERT INTO products(name,manufacturer,sex,category,color,size,amount)VALUES(?,?,?,?,?,?,?)',
+            [name, manufacturer, sex, category, color, size, amount],
             function (err, result) {
                 if (err) {
                     throw err;
@@ -230,7 +287,7 @@ exports.createProduct = async (req, res) => {
 
 exports.editProduct = async (req, res) => {
     const { id } = req.params;
-    const { name, sex, category, color, size } = req.body;
+    const { name, manufacturer, sex, category, color, size } = req.body;
 
     // console.log(name);
     // console.log(category);
@@ -239,8 +296,8 @@ exports.editProduct = async (req, res) => {
 
     try {
         poolPromise.query(
-            'UPDATE products SET name = ?, sex = ?, category = ?, color = ?, size = ? WHERE id = ?',
-            [name, sex, category, color, size, id],
+            'UPDATE products SET name = ?, manufacturer = ?, sex = ?, category = ?, color = ?, size = ? WHERE id = ?',
+            [name, manufacturer, sex, category, color, size, id],
             function (err, result) {
                 if (err) {
                     throw err;
@@ -258,7 +315,7 @@ exports.editProduct = async (req, res) => {
 };
 
 exports.duplicateProduct = async (req, res) => {
-    const { name, sex, category, color, size, amount } = req.body;
+    const { name, manufacturer, sex, category, color, size, amount } = req.body;
 
     // console.log(name);
     // console.log(category);
@@ -268,8 +325,8 @@ exports.duplicateProduct = async (req, res) => {
 
     try {
         poolPromise.query(
-            'INSERT INTO products(name,sex,category,color,size,amount)VALUES(?,?,?,?,?,?)',
-            [name, sex, category, color, size, amount],
+            'INSERT INTO products(name,manufacturer,sex,category,color,size,amount)VALUES(?,?,?,?,?,?,?)',
+            [name, manufacturer, sex, category, color, size, amount],
             function (err, result) {
                 if (err) {
                     throw err;
@@ -466,3 +523,17 @@ exports.delManufacture = async (req, res) => {
         return console.log(error);
     }
 };
+
+// exports.exportProducts = async (req, res) => {
+//     try {
+//         poolPromise.query('SELECT * FROM products', function (err, result) {
+//             if (err) {
+//                 throw err;
+//             }
+//             // console.log(result);
+//             return res.json(result);
+//         });
+//     } catch (error) {
+//         return console.log(error);
+//     }
+// };

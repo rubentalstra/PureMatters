@@ -56,6 +56,32 @@
                                     <hr />
 
                                     <div class="row">
+                                        <div class="col-sm-3"><h6 class="mb-0">Fabrikant</h6></div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <select
+                                                name="manufacturer"
+                                                class="form-control form-select"
+                                                aria-label="Default select example"
+                                                required
+                                            >
+                                                <option selected value="<%= product[0]['manufacturer'] %>">
+                                                    <%= product[0]['manufacturer'] %>
+                                                </option>
+                                                <option disabled value="" >------</option>
+                                            </option>
+                                            <% if ( manufacturersList !=undefined) { %> <% for (var data
+                                            of manufacturersList) { %>
+                                            <option value="<%= data['name'] %>">
+                                                <%= data['name'] %>
+                                            </option>
+                                            <% } %> <% } else { %> <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+
+                                    <div class="row">
                                         <div class="col-sm-3"><h6 class="mb-0">Geslacht</h6></div>
                                         <div class="col-sm-9 text-secondary">
                                             <select
@@ -78,14 +104,27 @@
 
                                     <hr />
                                     <div class="row">
-                                        <div class="col-sm-3"><h6 class="mb-0">Categorie</h6></div>
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Categorie</h6>
+                                        </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input
-                                                type="text"
+                                            <select
                                                 name="category"
-                                                class="form-control text-muted mb-0"
-                                                value="<%= product[0]['category'] %>"
-                                            />
+                                                class="form-control form-select"
+                                                aria-label="Default select example"
+                                                required
+                                            >
+                                            <option selected value="<%= product[0]['category'] %>">
+                                                    <%= product[0]['category'] %>
+                                                </option>
+                                                <option>------</option>
+                                                <% if ( categoryList !=undefined) { %> <% for (var data of
+                                                categoryList) { %>
+                                                <option value="<%= data['name'] %>">
+                                                    <%= data['name'] %>
+                                                </option>
+                                                <% } %> <% } else { %> <% } %>
+                                            </select>
                                         </div>
                                     </div>
                                     <hr />

@@ -31,7 +31,7 @@
                 <!-- DataTable -->
 
                 <div class="clearfix">
-                    <div style="float: left"><h2>Categorie Lijst</h2></div>
+                    <div style="float: left"><h2>Categorieën Lijst</h2></div>
                     <div style="float: right">
                         <button type="button" class="btn btn-success createCategory">
                             <i class="fa-solid fa-plus"></i> Categorie Toevoegen
@@ -44,7 +44,7 @@
                         <tr>
                             <th>#</th>
                             <th>Naam</th>
-                            <th>Product Bewerken</th>
+                            <th>Categorieën Bewerken</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -81,7 +81,7 @@
                         <tr>
                             <th>#</th>
                             <th>Naam</th>
-                            <th>Product Bewerken</th>
+                            <th>Fabrikanten Bewerken</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -293,10 +293,17 @@
                     $('#editCategory').modal('show');
                 });
                 $('body').on('click', '.delCategory', function () {
-                    var name = $(this).attr('data-name');
-                    $('#nameDeleteCategory').val(name);
                     var id = $(this).attr('data-id');
                     $('#idDeleteCategory').val(id);
+
+                    var name = $(this).attr('data-name');
+
+                    var str =
+                        'Weet je zeker dat je onderstaande categorie wilt verwijderen: <br><br>  <h4><b>' +
+                        name +
+                        '</b></h4>';
+                    $('#nameDeleteCategory').html(str);
+
                     $('#delCategory').modal('show');
                 });
 
@@ -305,17 +312,24 @@
                     $('#createManufacturers').modal('show');
                 });
                 $('body').on('click', '.editManufacturer', function () {
-                    var name = $(this).attr('edit-name');
-                    $('#nameEditManufacturer').val(name);
                     var id = $(this).attr('edit-id');
                     $('#idEditManufacturer').val(id);
+                    var name = $(this).attr('edit-name');
+                    $('#nameEditManufacturer').val(name);
                     $('#editManufacturers').modal('show');
                 });
                 $('body').on('click', '.delManufacturer', function () {
-                    var name = $(this).attr('data-name');
-                    $('#nameDeleteManufacturer').val(name);
                     var id = $(this).attr('data-id');
                     $('#idDeleteManufacturer').val(id);
+
+                    var name = $(this).attr('data-name');
+
+                    var str =
+                        'Weet je zeker dat je onderstaande fabrikant wilt verwijderen: <br><br>  <h4><b>' +
+                        name +
+                        '</b></h4>';
+                    $('#nameDeleteManufacturer').html(str);
+
                     $('#delManufacturers').modal('show');
                 });
             });
