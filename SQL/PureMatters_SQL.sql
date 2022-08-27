@@ -86,19 +86,13 @@
 --     UPDATE CURRENT_TIMESTAMP
 --     ) DEFAULT CHARSET UTF8 COMMENT 'manufacturers_list';
 
--- INSERT INTO products
+-- INSERT INTO manufacturers_list
 --     (
---     name,
---     category,
---     color,
---     size
+--     name
 --     )
 -- VALUES
 --     (
---         'wollen sokken 2',
---         'sokken',
---         'rood',
---         'S'
+--         'Engel'
 --     );
 
 -- CREATE TABLE category_list

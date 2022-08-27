@@ -87,6 +87,34 @@ exports.getAllProducts = async (req, res) => {
     }
 };
 
+exports.getAllCategories = async (req, res) => {
+    try {
+        poolPromise.query('SELECT * FROM category_list', function (err, result) {
+            if (err) {
+                throw err;
+            }
+            // console.log(result);
+            return res.json(result);
+        });
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+exports.getAllManufacturers = async (req, res) => {
+    try {
+        poolPromise.query('SELECT * FROM manufacturers_list', function (err, result) {
+            if (err) {
+                throw err;
+            }
+            // console.log(result);
+            return res.json(result);
+        });
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
 exports.putProduct = async (req, res) => {
     const { id } = req.params;
 
@@ -287,6 +315,136 @@ exports.getProductHistory = async (req, res) => {
                 return res.json(result);
             }
         );
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+// Category
+
+exports.createCategory = async (req, res) => {
+    const { name } = req.body;
+
+    try {
+        poolPromise.query('INSERT INTO category_list(name)VALUES(?)', [name], function (err, result) {
+            if (err) {
+                throw err;
+            }
+            if (result.affectedRows == 0) {
+                return res.sendStatus(400);
+            }
+
+            return res.render('system-settings');
+        });
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+exports.editCategory = async (req, res) => {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    try {
+        poolPromise.query(
+            'UPDATE category_list SET name = ? WHERE id = ?',
+            [name, id],
+            function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                if (result.affectedRows == 0) {
+                    return res.sendStatus(400);
+                }
+
+                return res.render('system-settings');
+            }
+        );
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+exports.delCategory = async (req, res) => {
+    const id = req.body.pid;
+
+    try {
+        poolPromise.query('DELETE FROM category_list WHERE id = ?', [id], function (err, result) {
+            if (err) {
+                throw err;
+            }
+            if (result.affectedRows == 0) {
+                return res.sendStatus(400);
+            }
+
+            return res.render('system-settings');
+        });
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+// Manufacture
+
+exports.createManufacture = async (req, res) => {
+    const { name } = req.body;
+
+    try {
+        poolPromise.query('INSERT INTO manufacturers_list(name)VALUES(?)', [name], function (err, result) {
+            if (err) {
+                throw err;
+            }
+            if (result.affectedRows == 0) {
+                return res.sendStatus(400);
+            }
+
+            return res.render('system-settings');
+        });
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+exports.editManufacture = async (req, res) => {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    try {
+        poolPromise.query(
+            'UPDATE manufacturers_list SET name = ? WHERE id = ?',
+            [name, id],
+            function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                if (result.affectedRows == 0) {
+                    return res.sendStatus(400);
+                }
+
+                return res.render('system-settings');
+            }
+        );
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+exports.delManufacture = async (req, res) => {
+    const id = req.body.idManufacturer;
+
+    console.log(id);
+
+    try {
+        poolPromise.query('DELETE FROM manufacturers_list WHERE id = ?', [id], function (err, result) {
+            if (err) {
+                throw err;
+            }
+            if (result.affectedRows == 0) {
+                return res.sendStatus(400);
+            }
+
+            return res.render('system-settings');
+        });
     } catch (error) {
         return console.log(error);
     }

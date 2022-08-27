@@ -31,7 +31,6 @@ const getRoutes = (mainController, router) => {
     router.get('/add-products', mainController.getAddPage);
     router.get('/edit/:id', mainController.getEditPage);
     router.get('/duplicate/:id', mainController.getDuplicatePage);
-    // router.get('/edit-products', mainController.getEditPage);
 
     // system settings
     router.get('/system-settings', mainController.getSystemSettingsPage);
@@ -46,15 +45,17 @@ const getRoutes = (mainController, router) => {
     router.get('/api/products/history/:id', mainController.getProductHistory);
     router.post('/api/products/:id', mainController.putProduct);
 
-    // router.post(
-    //     '/uploadCSV',
-
-    //     authProvider.isAuthenticated,
-    //     upload.single('file'),
-    //     mainController.postUploadCSVPage
-    // );
-
-    // router.get('/tenant', authProvider.isAuthenticated, authProvider.getToken, mainController.getTenantPage); // get token for this route to call web API
+    // system settings
+    /// Category
+    router.get('/api/settings/categories', mainController.getAllCategories);
+    router.post('/api/settings/categories/create', mainController.createCategory);
+    router.post('/api/settings/categories/edit/:id', mainController.editCategory);
+    router.post('/api/settings/categories/delete', mainController.delCategory);
+    /// Manufacturer
+    router.get('/api/settings/manufacturers', mainController.getAllManufacturers);
+    router.post('/api/settings/manufacturers/create', mainController.createManufacture);
+    router.post('/api/settings/manufacturers/edit/:id', mainController.editManufacture);
+    router.post('/api/settings/manufacturers/delete', mainController.delManufacture);
 
     // The error handler must be before any other error middleware and after all controllers
     router.use(Sentry.Handlers.errorHandler());
