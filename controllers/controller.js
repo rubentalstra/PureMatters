@@ -28,7 +28,20 @@ exports.getSettingsPage = (req, res) => {
 };
 
 exports.getAddPage = (req, res) => {
-    return res.render('add');
+    try {
+        poolPromise.query('SELECT * FROM category_list', function (err, result) {
+            if (err) {
+                throw err;
+            }
+            // console.log(result);
+            const list = JSON.parse(JSON.stringify(result));
+
+            // console.log(list);
+            return res.render('add', { list });
+        });
+    } catch (error) {
+        return console.log(error);
+    }
 };
 
 exports.getSystemSettingsPage = (req, res) => {
@@ -54,7 +67,7 @@ exports.getEditPage = (req, res) => {
     }
 };
 
-exports.getDuplicatePage = (req, res) => {
+exports.getDuplicatePage = async (req, res) => {
     const { id } = req.params;
 
     try {

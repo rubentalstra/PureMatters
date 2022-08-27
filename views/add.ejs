@@ -88,12 +88,20 @@
                                     <div class="row">
                                         <div class="col-sm-3"><h6 class="mb-0">Categorie</h6></div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input
-                                                type="text"
+                                            <select
                                                 name="category"
-                                                class="form-control text-muted mb-0"
-                                                value=""
-                                            />
+                                                class="form-control form-select"
+                                                aria-label="Default select example"
+                                            >
+                                                <option selected disabled value="">
+                                                    Selecteer een categerie
+                                                </option>
+                                                <% if ( list !=undefined) { %> <% for (var data of list) { %>
+                                                <option value="<%= data['name'] %>">
+                                                    <%= data['name'] %>
+                                                </option>
+                                                <% } %> <% } else { %> <% } %>
+                                            </select>
                                         </div>
                                     </div>
                                     <hr />
