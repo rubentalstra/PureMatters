@@ -30,12 +30,14 @@ const getRoutes = (mainController, router) => {
     router.get('/settings-products', mainController.getSettingsPage);
     router.get('/add-products', mainController.getAddPage);
     router.get('/edit/:id', mainController.getEditPage);
+    router.get('/duplicate/:id', mainController.getDuplicatePage);
     // router.get('/edit-products', mainController.getEditPage);
 
     // API
     router.get('/api/products', mainController.getAllProducts);
     router.post('/api/products/create', mainController.createProduct);
     router.post('/api/products/edit/:id', mainController.editProduct);
+    router.post('/api/products/duplicate/:id', mainController.duplicateProduct);
     router.post('/api/products/delete', mainController.delProduct);
 
     router.get('/api/products/history/:id', mainController.getProductHistory);

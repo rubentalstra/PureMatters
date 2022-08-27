@@ -50,6 +50,25 @@ exports.getEditPage = (req, res) => {
     }
 };
 
+exports.getDuplicatePage = (req, res) => {
+    const { id } = req.params;
+
+    try {
+        poolPromise.query('SELECT * FROM products WHERE id = ?', [id], function (err, result) {
+            if (err) {
+                throw err;
+            }
+            // console.log(result);
+            return res.render('duplicate', {
+                id: id,
+                product: JSON.parse(JSON.stringify(result)),
+            });
+        });
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
 exports.getAllProducts = async (req, res) => {
     try {
         poolPromise.query('SELECT * FROM products', function (err, result) {
@@ -172,7 +191,7 @@ exports.createProduct = async (req, res) => {
                     return res.sendStatus(400);
                 }
 
-                return res.render('home');
+                return res.render('settings');
             }
         );
     } catch (error) {
@@ -193,6 +212,35 @@ exports.editProduct = async (req, res) => {
         poolPromise.query(
             'UPDATE products SET name = ?, category = ?, color = ?, size = ? WHERE id = ?',
             [name, category, color, size, id],
+            function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                if (result.affectedRows == 0) {
+                    return res.sendStatus(400);
+                }
+
+                return res.render('settings');
+            }
+        );
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+exports.duplicateProduct = async (req, res) => {
+    const { name, category, color, size, amount } = req.body;
+
+    // console.log(name);
+    // console.log(category);
+    // console.log(color);
+    // console.log(size);
+    // console.log(amount);
+
+    try {
+        poolPromise.query(
+            'INSERT INTO products(name,category,color,size,amount)VALUES(?,?,?,?,?)',
+            [name, category, color, size, amount],
             function (err, result) {
                 if (err) {
                     throw err;

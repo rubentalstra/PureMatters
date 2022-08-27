@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" status="width=device-width, initial-scale=1.0" />
+
+        <title>PureMatters Inventory - Duplicate Product</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+        <link href="/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+        <script defer src="/fontawesome/js/all.js"></script>
+
+        <link rel="stylesheet" href="/app.css" />
+        <link rel="stylesheet" href="/style.css" />
+    </head>
+
+    <body>
+        <%- include('includes/navbar', {}); %>
+
+        <div class="row" style="margin: auto">
+            <div id="card-div" class="col-md-12" style="margin-bottom: 0px !important">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center text-center">
+                                    <i class="fa-solid fa-warehouse fa-8x"></i>
+                                    <div class="mt-3">
+                                        <h4>Product Dupliceren</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <form
+                                    method="post"
+                                    action="/api/products/duplicate/<%= product[0]['id'] %>"
+                                    enctype="application/x-www-form-urlencoded"
+                                >
+                                    <div class="row">
+                                        <div class="col-sm-3"><h6 class="mb-0">Naam</h6></div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input
+                                                type="text"
+                                                name="name"
+                                                class="form-control text-muted mb-0"
+                                                value="<%= product[0]['name'] %>"
+                                            />
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-3"><h6 class="mb-0">Categorie</h6></div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input
+                                                type="text"
+                                                name="category"
+                                                class="form-control text-muted mb-0"
+                                                value="<%= product[0]['category'] %>"
+                                            />
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-3"><h6 class="mb-0">Kleur</h6></div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input
+                                                type="text"
+                                                name="color"
+                                                class="form-control text-muted mb-0"
+                                                value="<%= product[0]['color'] %>"
+                                            />
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-3"><h6 class="mb-0">Maat</h6></div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input
+                                                type="text"
+                                                name="size"
+                                                class="form-control text-muted mb-0"
+                                                value="<%= product[0]['size'] %>"
+                                            />
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-3"><h6 class="mb-0">Hoeveelheid</h6></div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input
+                                                type="number"
+                                                name="amount"
+                                                class="form-control text-muted mb-0"
+                                                value="<%= product[0]['amount'] %>"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    <div class="row">
+                                        <div class="d-flex flex-column align-items-center text-center">
+                                            <button type="submit" class="btn btn-primary">
+                                                Product Dupliceren
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('includes/footer'); %>
+
+        <!-- importing bootstrap.js and supporting js libraries -->
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+    </body>
+</html>

@@ -28,11 +28,11 @@
         <div class="row" style="margin: auto">
             <div id="card-div" class="col-md-12">
                 <!-- button to add new Product -->
-                <div class="col-md-11 text-right">
+                <!-- <div class="col-md-11 text-right">
                     <a class="btn btn-success" href="/add-products" role="button">
                         <i class="fa-solid fa-plus"></i> Product Toevoegen
                     </a>
-                </div>
+                </div> -->
                 <!-- DataTable -->
                 <table id="table_id" class="table table-striped" style="width: 100%">
                     <thead>
@@ -54,7 +54,13 @@
                             <th>Kleur</th>
                             <th>Maat</th>
                             <th class="text_search">Hoeveelheid</th>
-                            <th></th>
+                            <th>
+                                <div class="col-md-11 text-center">
+                                    <a class="btn btn-success" href="/add-products" role="button">
+                                        <i class="fa-solid fa-plus"></i> Product Toevoegen
+                                    </a>
+                                </div>
+                            </th>
                         </tr>
                     </tfoot>
                 </table>
@@ -163,6 +169,9 @@
                             data: 'id',
                             render: function (data, type, row, meta) {
                                 return (
+                                    '<a class="btn btn-info mr-2" href="/duplicate/' +
+                                    data +
+                                    '" role="button"><i class="fa-solid fa-copy"></i> Dupliceren </a>' +
                                     '<a class="btn btn-warning mr-2" href="/edit/' +
                                     data +
                                     '" role="button"><i class="fa-solid fa-pen"></i> Bewerken </a>' +
