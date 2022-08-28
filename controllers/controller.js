@@ -547,6 +547,7 @@ exports.exportProducts = (req, res) => {
 
             const buf = XLSX.write(workBook, { type: 'buffer', bookType: 'xlsx' });
 
+            // create time date
             var getDate = new Date().toISOString().slice(0, 10).split('-');
             var _date = getDate[2] + '/' + getDate[1] + '/' + getDate[0];
 
