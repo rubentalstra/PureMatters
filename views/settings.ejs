@@ -201,10 +201,13 @@
                         $('#table_id thead').append(footer);
 
                         this.api()
-                            .columns(2)
+                            .columns([2, 3, 4, 5])
                             .every(function () {
                                 var column = this;
-                                var select = $('<select><option value="">Select Geslacht</option></select>')
+                                var colTitle = this.header().innerHTML;
+                                var select = $(
+                                    '<select><option value="">Select ' + colTitle + '</option></select>'
+                                )
                                     .appendTo($(column.footer()).empty())
                                     .on('change', function () {
                                         var val = $.fn.dataTable.util.escapeRegex($(this).val());
@@ -217,69 +220,8 @@
                                     .unique()
                                     .sort()
                                     .each(function (d, j) {
-                                        select.append('<option value="' + d + '">' + d + '</option>');
-                                    });
-                            });
-                        this.api()
-                            .columns(3)
-                            .every(function () {
-                                var column = this;
-                                var select = $('<select><option value="">Select Categorie</option></select>')
-                                    .appendTo($(column.footer()).empty())
-                                    .on('change', function () {
-                                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                                        column.search(val ? '^' + val + '$' : '', true, false).draw();
-                                    });
-
-                                column
-                                    .data()
-                                    .unique()
-                                    .sort()
-                                    .each(function (d, j) {
-                                        select.append('<option value="' + d + '">' + d + '</option>');
-                                    });
-                            });
-
-                        this.api()
-                            .columns(4)
-                            .every(function () {
-                                var column = this;
-                                var select = $('<select><option value="">Select Kleur</option></select>')
-                                    .appendTo($(column.footer()).empty())
-                                    .on('change', function () {
-                                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                                        column.search(val ? '^' + val + '$' : '', true, false).draw();
-                                    });
-
-                                column
-                                    .data()
-                                    .unique()
-                                    .sort()
-                                    .each(function (d, j) {
-                                        select.append('<option value="' + d + '">' + d + '</option>');
-                                    });
-                            });
-
-                        this.api()
-                            .columns(5)
-                            .every(function () {
-                                var column = this;
-                                var select = $('<select><option value="">Select Maat</option></select>')
-                                    .appendTo($(column.footer()).empty())
-                                    .on('change', function () {
-                                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                                        column.search(val ? '^' + val + '$' : '', true, false).draw();
-                                    });
-
-                                column
-                                    .data()
-                                    .unique()
-                                    .sort()
-                                    .each(function (d, j) {
-                                        select.append('<option value="' + d + '">' + d + '</option>');
+                                        var val = $('<div/>').html(d).text();
+                                        select.append('<option value="' + val + '">' + val + '</option>');
                                     });
                             });
                     },
