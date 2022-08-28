@@ -25,6 +25,17 @@
     <body>
         <%- include('includes/navbar', {}); %>
 
+        <button
+            type="button"
+            id="lab_jobs"
+            class="btn btn-primary mb-4"
+            data-toggle="button"
+            aria-pressed="false"
+            autocomplete="off"
+        >
+            is niet beschikbaar
+        </button>
+
         <div class="row" style="margin: auto; margin-top: -50px">
             <div id="card-div" class="col-md-12">
                 <!-- button to add new Product -->
@@ -137,6 +148,10 @@
                     columnDefs: [{ width: 10, targets: 0 }],
 
                     createdRow: function (row, data, index) {
+                        if (data['amount'] <= 0) {
+                            $(row).addClass('table-danger');
+                        }
+
                         if (data['amount'] < 0) {
                             $('td', row).eq(6).addClass('text-danger font-weight-bold');
                         }
@@ -147,7 +162,7 @@
                         $('#table_id thead').append(footer);
 
                         this.api()
-                            .columns([2, 3, 4, 5])
+                            .columns([2, 3, 4])
                             .every(function () {
                                 var column = this;
                                 var colTitle = this.header().innerHTML;
@@ -183,7 +198,7 @@
                     buildSelect(table);
                 });
                 function buildSelect(table) {
-                    table.columns([2, 3, 4, 5]).every(function () {
+                    table.columns([2, 3, 4]).every(function () {
                         var column = table.column(this, { search: 'applied' });
                         var colTitle = this.header().innerHTML;
                         var select = $('<select><option value="">Select ' + colTitle + '</option></select>')
@@ -220,7 +235,11 @@
                     // $('#table_id').DataTable().search('').draw();
                     table.search('').columns().search('').draw();
                     $('input:text').val('');
-                    $('select').val('');
+                    $('table:select').val('');
+                });
+
+                $('#lab_jobs').on('click', function () {
+                    table.column(6).search('0', '-1').draw();
                 });
             });
         </script>

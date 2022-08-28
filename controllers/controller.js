@@ -146,8 +146,8 @@ exports.getDuplicatePage = async (req, res) => {
 
 exports.getAllProducts = async (req, res) => {
     try {
-        // poolPromise.query('SELECT * FROM products;', function (err, result) {
-        poolPromise.query('SELECT * FROM products ORDER BY name, color, size ASC;', function (err, result) {
+        poolPromise.query('SELECT * FROM products;', function (err, result) {
+            // poolPromise.query('SELECT * FROM products ORDER BY name, color, size ASC;', function (err, result) {
             if (err) {
                 throw err;
             }

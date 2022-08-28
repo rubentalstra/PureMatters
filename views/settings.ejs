@@ -201,7 +201,7 @@
                         $('#table_id thead').append(footer);
 
                         this.api()
-                            .columns([2, 3, 4, 5])
+                            .columns([2, 3, 4])
                             .every(function () {
                                 var column = this;
                                 var colTitle = this.header().innerHTML;
@@ -235,7 +235,7 @@
                     // $('#table_id').DataTable().search('').draw();
                     table.search('').columns().search('').draw();
                     $('input:text').val('');
-                    $('select').val('');
+                    $('table:select').val('');
                 });
             });
         </script>
