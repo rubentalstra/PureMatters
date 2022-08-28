@@ -192,19 +192,19 @@
                 <table id="table_id" class="table table-striped" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>Index</th>
+                            <th>#</th>
                             <th>Nieuwe Voorraad</th>
                             <th>Oude Voorraad</th>
-                            <th>Transactie</th>
+                            <th>Toegevoegd / verkocht</th>
                             <th>Datum</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th></th>
-                            <th class="text_search">Nieuwe Voorraad</th>
-                            <th class="text_search">Oude Voorraad</th>
-                            <th>Transactie</th>
+                            <th></th>
+                            <th></th>
+                            <th>Toegevoegd / verkocht</th>
                             <th class="text_search">Datum</th>
                         </tr>
                     </tfoot>
@@ -286,7 +286,10 @@
                             .columns(3)
                             .every(function () {
                                 var column = this;
-                                var select = $('<select><option value="">Select Transactie</option></select>')
+                                var colTitle = this.header().innerHTML;
+                                var select = $(
+                                    '<select><option value="">Select ' + colTitle + '</option></select>'
+                                )
                                     .appendTo($(column.footer()).empty())
                                     .on('change', function () {
                                         var val = $.fn.dataTable.util.escapeRegex($(this).val());
