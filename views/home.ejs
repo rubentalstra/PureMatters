@@ -25,17 +25,6 @@
     <body>
         <%- include('includes/navbar', {}); %>
 
-        <button
-            type="button"
-            id="lab_jobs"
-            class="btn btn-primary mb-4"
-            data-toggle="button"
-            aria-pressed="false"
-            autocomplete="off"
-        >
-            is niet beschikbaar
-        </button>
-
         <div class="row" style="margin: auto; margin-top: -50px">
             <div id="card-div" class="col-md-12">
                 <!-- button to add new Product -->
@@ -71,6 +60,9 @@
                             <th>Maat</th>
                             <th>Hoeveelheid</th>
                             <th>
+                                <button type="button" class="btn btn-danger" id="notAvailable">
+                                    <i class="fa-solid fa-dolly"></i> niet opvoorraad
+                                </button>
                                 <button type="button" class="btn btn-secondary" id="clearFilter">
                                     <i class="fa-solid fa-eraser"></i> Clear
                                 </button>
@@ -238,8 +230,8 @@
                     $('table:select').val('');
                 });
 
-                $('#lab_jobs').on('click', function () {
-                    table.column(6).search('0', '-1').draw();
+                $('#notAvailable').on('click', function () {
+                    table.column(6).search('^-|^[0]$', true, false).draw();
                 });
             });
         </script>
