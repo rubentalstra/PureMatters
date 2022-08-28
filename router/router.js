@@ -42,6 +42,9 @@ const getRoutes = (mainController, router) => {
     router.post('/api/products/duplicate/:id', mainController.duplicateProduct);
     router.post('/api/products/delete', mainController.delProduct);
 
+    // export
+    router.get('/api/products/export', mainController.exportProducts);
+
     router.get('/api/products/history/:id', mainController.getProductHistory);
     router.post('/api/products/:id', mainController.putProduct);
 

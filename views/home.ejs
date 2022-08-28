@@ -25,14 +25,17 @@
     <body>
         <%- include('includes/navbar', {}); %>
 
-        <div class="row" style="margin: auto">
+        <div class="row" style="margin: auto; margin-top: -50px">
             <div id="card-div" class="col-md-12">
                 <!-- button to add new Product -->
-                <!-- <div class="col-md-11 text-right">
-                    <a class="btn btn-success" href="/add-products" role="button">
-                        <i class="fa-solid fa-plus"></i> Product Toevoegen
-                    </a>
-                </div> -->
+                <div class="clearfix">
+                    <div style="float: left"><h2>Inventory Lijst</h2></div>
+                    <div style="float: right">
+                        <a role="button" href="api/products/export" class="btn btn-success">
+                            <i class="fa-solid fa-file-excel"></i> Export
+                        </a>
+                    </div>
+                </div>
                 <!-- DataTable -->
                 <table id="table_id" class="table table-striped" style="width: 100%">
                     <thead>

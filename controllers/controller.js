@@ -1,4 +1,5 @@
 const { poolPromise } = require('../database/db');
+const XLSX = require('xlsx');
 
 exports.getHomePage = (req, res) => {
     return res.render('home');
@@ -145,7 +146,7 @@ exports.getDuplicatePage = async (req, res) => {
 
 exports.getAllProducts = async (req, res) => {
     try {
-        poolPromise.query('SELECT * FROM products', function (err, result) {
+        poolPromise.query('SELECT * FROM products ORDER BY name, color, size ASC;', function (err, result) {
             if (err) {
                 throw err;
             }
@@ -524,16 +525,40 @@ exports.delManufacture = async (req, res) => {
     }
 };
 
-// exports.exportProducts = async (req, res) => {
-//     try {
-//         poolPromise.query('SELECT * FROM products', function (err, result) {
-//             if (err) {
-//                 throw err;
-//             }
-//             // console.log(result);
-//             return res.json(result);
-//         });
-//     } catch (error) {
-//         return console.log(error);
-//     }
-// };
+exports.exportProducts = (req, res) => {
+    try {
+        poolPromise.query('SELECT * FROM products', function (err, result) {
+            if (err) {
+                throw err;
+            }
+
+            const workSheet = XLSX.utils.json_to_sheet(JSON.parse(JSON.stringify(result)));
+
+            /* hide second column */
+            workSheet['!cols'] = [];
+            workSheet['!cols'][0] = { hidden: true };
+            workSheet['!cols'][8] = { hidden: true };
+            workSheet['!cols'][9] = { hidden: true };
+
+            const workBook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workBook, workSheet, 'Sheet 1');
+
+            const buf = XLSX.write(workBook, { type: 'buffer', bookType: 'xlsx' });
+
+            var getDate = new Date().toISOString().slice(0, 10).split('-');
+            var _date = getDate[2] + '/' + getDate[1] + '/' + getDate[0];
+
+            /* prepare response headers */
+            res.statusCode = 200;
+            res.setHeader(
+                'Content-Disposition',
+                'attachment; filename="PureMatters-inventory_' + _date + '.xlsx"'
+            );
+            res.setHeader('Content-Type', 'application/vnd.ms-excel');
+            return res.end(buf);
+        });
+    } catch (error) {
+        return console.log(error);
+    }
+};
+//https://ozenero.com/node-js-extract-mysql-data-to-excel-xlsx-file-using-exceljs
