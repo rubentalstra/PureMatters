@@ -141,6 +141,7 @@
                             $('td', row).eq(6).addClass('text-danger font-weight-bold');
                         }
                     },
+
                     initComplete: function (settings, json) {
                         var footer = $('#table_id tfoot tr');
                         $('#table_id thead').append(footer);
@@ -169,32 +170,47 @@
                                         select.append('<option value="' + val + '">' + val + '</option>');
                                     });
 
-                                //     var column = table.column( this, {search: 'applied'} );
-                                //     console.log(this.index())
-                                //     var select = $('<select><option value=""></option></select>')
-                                //           .appendTo($("thead tr:nth-child(2) th").eq(column.index()).empty())
-                                //     .on( 'change', function () {
-                                //       var val = $.fn.dataTable.util.escapeRegex(
-                                //         $(this).val()
-                                //       );
-
-                                //       column
-                                //       .search( val ? '^'+val+'$' : '', true, false )
-                                //       .draw();
-                                //     } );
-
-                                //     column.data().unique().sort().each( function ( d, j ) {
-                                //       select.append( '<option value="'+d+'">'+d+'</option>' );
-                                //     } );
-
-                                // //     The rebuild will clear the exisiting select, so it needs to be repopulated
-                                //     var currSearch = column.search();
-                                //     if ( currSearch ) {
-                                //       select.val( currSearch.substring(1, currSearch.length-1) );
-                                //     }
+                                //     The rebuild will clear the exisiting select, so it needs to be repopulated
+                                var currSearch = column.search();
+                                if (currSearch) {
+                                    select.val(currSearch.substring(1, currSearch.length - 1));
+                                }
                             });
                     },
                 });
+                buildSelect(table);
+                table.on('draw', function () {
+                    buildSelect(table);
+                });
+                function buildSelect(table) {
+                    table.columns([2, 3, 4, 5]).every(function () {
+                        var column = table.column(this, { search: 'applied' });
+                        var colTitle = this.header().innerHTML;
+                        var select = $('<select><option value="">Select ' + colTitle + '</option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+
+                        column
+                            .data()
+                            .unique()
+                            .sort()
+                            .each(function (d, j) {
+                                var val = $('<div/>').html(d).text();
+                                select.append('<option value="' + val + '">' + val + '</option>');
+                            });
+
+                        //     The rebuild will clear the exisiting select, so it needs to be repopulated
+                        var currSearch = column.search();
+                        if (currSearch) {
+                            select.val(currSearch.substring(1, currSearch.length - 1));
+                        }
+                    });
+                }
+
                 // Apply the search
                 $('#table_id thead').on('keyup', 'input', function () {
                     table.column($(this).parent().index()).search(this.value).draw();
