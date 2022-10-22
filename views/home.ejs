@@ -31,6 +31,13 @@
                 <div class="clearfix">
                     <div style="float: left"><h2>Inventory Lijst</h2></div>
                     <div style="float: right">
+                        <button type="button" class="btn btn-danger" id="notAvailable">
+                            <i class="fa-solid fa-dolly"></i> niet op voorraad
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="clearFilter">
+                            <i class="fa-solid fa-eraser"></i> Clear
+                        </button>
+
                         <a role="button" href="api/products/export" class="btn btn-success">
                             <i class="fa-solid fa-file-excel"></i> Export
                         </a>
@@ -47,6 +54,8 @@
                             <th>Kleur</th>
                             <th>Maat</th>
                             <th>Hoeveelheid</th>
+                            <th>Gereserveerd</th>
+                            <th>Besteld</th>
                             <th>Bekijk Product</th>
                         </tr>
                     </thead>
@@ -59,14 +68,9 @@
                             <th>Kleur</th>
                             <th>Maat</th>
                             <th>Hoeveelheid</th>
-                            <th>
-                                <button type="button" class="btn btn-danger" id="notAvailable">
-                                    <i class="fa-solid fa-dolly"></i> niet op voorraad
-                                </button>
-                                <button type="button" class="btn btn-secondary" id="clearFilter">
-                                    <i class="fa-solid fa-eraser"></i> Clear
-                                </button>
-                            </th>
+                            <th>Gereserveerd</th>
+                            <th>Besteld</th>
+                            <th></th>
                         </tr>
                     </tfoot>
                 </table>
@@ -128,6 +132,8 @@
                         { data: 'color' },
                         { data: 'size' },
                         { data: 'amount' },
+                        { data: 'reserved_amount' },
+                        { data: 'order_amount' },
                         {
                             data: 'id',
                             render: function (data, type, row, meta) {

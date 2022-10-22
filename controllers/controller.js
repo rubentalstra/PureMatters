@@ -373,6 +373,184 @@ exports.delProduct = async (req, res) => {
     }
 };
 
+//  Reservation
+exports.getProductReserved = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        poolPromise.query(
+            'SELECT * FROM reserved WHERE product_id = ? ORDER BY update_time DESC',
+            [id],
+            function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                // console.log(result);
+                return res.json(result);
+            }
+        );
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+exports.createReserved = async (req, res) => {
+    var { amount, notes, productId, ProductReservedAmount } = req.body;
+
+    const realReservedAmount = +ProductReservedAmount + +amount;
+    try {
+        poolPromise.query(
+            'INSERT INTO reserved (amount,notes,product_id)VALUES (?,?,?)',
+            [amount, notes, productId],
+            function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                if (result.affectedRows == 0) {
+                    return res.sendStatus(400);
+                }
+
+                //  when it's successfully it will go to the next state
+                poolPromise.query(
+                    'UPDATE products SET reserved_amount = ? WHERE id = ?',
+                    [realReservedAmount, productId],
+                    function (err, result) {
+                        if (err) {
+                            throw err;
+                        }
+                        if (result.affectedRows == 0) {
+                            return res.sendStatus(400);
+                        }
+
+                        return res.redirect('/details/' + productId);
+                    }
+                );
+            }
+        );
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+exports.editReserved = async (req, res) => {
+    var { id, oldAmountEdit, amountEdit, notesEdit, productId, ProductReservedAmount } = req.body;
+
+    // console.log(amountEdit - oldAmountEdit);
+    const amountChange = amountEdit - oldAmountEdit;
+    const newProductReservedAmount = +ProductReservedAmount + +amountChange;
+    // console.log(ProductReservedAmount + amountChange);
+
+    try {
+        poolPromise.query(
+            'UPDATE reserved SET amount = ?, notes = ? WHERE id = ?',
+            [amountEdit, notesEdit, id],
+            function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                if (result.affectedRows == 0) {
+                    return res.sendStatus(400);
+                }
+
+                //  when it's successfully it will go to the next state
+                poolPromise.query(
+                    'UPDATE products SET reserved_amount = ? WHERE id = ?',
+                    [newProductReservedAmount, productId],
+                    function (err, result) {
+                        if (err) {
+                            throw err;
+                        }
+                        if (result.affectedRows == 0) {
+                            return res.sendStatus(400);
+                        }
+
+                        return res.redirect('/details/' + productId);
+                    }
+                );
+            }
+        );
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+exports.delReserved = async (req, res) => {
+    var { delId, delAmount, productId, ProductReservedAmount } = req.body;
+
+    const realReservedAmount = +ProductReservedAmount - +delAmount;
+    // console.log(realReservedAmount);
+
+    try {
+        poolPromise.query('DELETE FROM reserved WHERE id = ?', [delId], function (err, result) {
+            if (err) {
+                throw err;
+            }
+            if (result.affectedRows == 0) {
+                return res.sendStatus(400);
+            }
+
+            //  when it's successfully it will go to the next state
+            poolPromise.query(
+                'UPDATE products SET reserved_amount = ? WHERE id = ?',
+                [realReservedAmount, productId],
+                function (err, result) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (result.affectedRows == 0) {
+                        return res.sendStatus(400);
+                    }
+
+                    return res.redirect('/details/' + productId);
+                }
+            );
+        });
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+exports.soledReserved = async (req, res) => {
+    var { soledId, soledAmount, productId, ProductAmount, ProductReservedAmount } = req.body;
+
+    const newAmount = +ProductAmount - +soledAmount;
+    const realReservedAmount = +ProductReservedAmount - +soledAmount;
+
+    // console.log('ProductAmount: ' + ProductAmount);
+    // console.log('newAmount: ' + newAmount);
+
+    try {
+        poolPromise.query('DELETE FROM reserved WHERE id = ?', [soledId], function (err, result) {
+            if (err) {
+                throw err;
+            }
+            if (result.affectedRows == 0) {
+                return res.sendStatus(400);
+            }
+
+            //  when it's successfully it will go to the next state
+            poolPromise.query(
+                'UPDATE products SET amount = ?, reserved_amount = ? WHERE id = ?',
+                [newAmount, realReservedAmount, productId],
+                function (err, result) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (result.affectedRows == 0) {
+                        return res.sendStatus(400);
+                    }
+
+                    return res.redirect('/details/' + productId);
+                }
+            );
+        });
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+//  History
+
 exports.getProductHistory = async (req, res) => {
     const { id } = req.params;
 

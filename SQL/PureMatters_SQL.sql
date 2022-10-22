@@ -16,6 +16,28 @@
 --     UPDATE CURRENT_TIMESTAMP
 --     ) DEFAULT CHARSET UTF8 COMMENT 'products';
 
+-- CREATE TABLE reserved
+-- (
+--     id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+--     amount int,
+--     notes VARCHAR
+-- (255),
+--     product_id int NOT NULL,
+--     create_time DATETIME COMMENT 'Create Time' NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     update_time DATETIME COMMENT 'Update Time' NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+-- UPDATE CURRENT_TIMESTAMP
+-- ) DEFAULT CHARSET UTF8 COMMENT 'reserved';
+
+
+-- ALTER TABLE products
+-- ADD COLUMN order_amount int NOT NULL DEFAULT 0 AFTER amount;
+-- ALTER TABLE products
+-- ADD COLUMN reserved_amount int NOT NULL DEFAULT 0 AFTER amount;
+
+
+
+-- ALTER TABLE products DROP COLUMN reserved_amount
+
 -- INSERT INTO products
 --     (
 --     name,
@@ -33,9 +55,9 @@
 
 
 -- UPDATE products SET
---     amount = 15
+--     reserved_amount = 2
 --     WHERE 
---     id = 1;
+--     id = 15;
 
 
 -- CREATE TABLE product_history

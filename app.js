@@ -2,7 +2,7 @@ require('dotenv').config({ path: `./env/.env` });
 const express = require('express');
 const helmet = require('helmet');
 
-const spdy = require('spdy');
+const https = require('https');
 const rateLimit = require('express-rate-limit');
 
 const Sentry = require('@sentry/node');
@@ -91,27 +91,13 @@ app.use(limiter);
 // set up routes with authentication
 app.use(getRoutes(mainController, express.Router()));
 
-// https/2
-var options = {
-    // Private key
+// https
+const options = {
     key: fs.readFileSync('./cert/key.key'),
     cert: fs.readFileSync('./cert/cert.crt'),
-
-    // **optional** SPDY-specific options
-    spdy: {
-        protocols: ['h2', 'http/1.1'],
-        // plain: false,
-
-        // **optional**
-        // Parse first incoming X_FORWARDED_FOR frame and put it to the
-        // headers of every request.
-        // NOTE: Use with care! This should not be used without some proxy that
-        // will *always* send X_FORWARDED_FOR
-        // 'x-forwarded-for': true,
-    },
 };
 
-const server = spdy.createServer(options, app);
+const server = https.createServer(options, app);
 server.listen(process.env.API_PORT || 80, () => {
     console.log(`Msal Node Auth Code Sample app listening on port ${process.env.API_PORT || 80}!`);
 });

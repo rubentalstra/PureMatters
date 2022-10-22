@@ -44,9 +44,15 @@ const getRoutes = (mainController, router) => {
 
     // export
     router.get('/api/products/export', mainController.exportProducts);
-
     router.get('/api/products/history/:id', mainController.getProductHistory);
     router.post('/api/products/:id', mainController.putProduct);
+
+    // reserved
+    router.get('/api/products/reserved/:id', mainController.getProductReserved);
+    router.post('/api/products/reserved/create', mainController.createReserved);
+    router.post('/api/products/reserved/edit', mainController.editReserved);
+    router.post('/api/products/reserved/delete', mainController.delReserved);
+    router.post('/api/products/reserved/soled', mainController.soledReserved);
 
     // system settings
     /// Category
