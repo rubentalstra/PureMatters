@@ -34,6 +34,9 @@
                         <button type="button" class="btn btn-danger" id="notAvailable">
                             <i class="fa-solid fa-dolly"></i> niet op voorraad
                         </button>
+                        <button type="button" class="btn btn-primary" id="inOrder">
+                            <i class="fa-solid fa-dolly"></i> Besteld?
+                        </button>
                         <button type="button" class="btn btn-secondary" id="clearFilter">
                             <i class="fa-solid fa-eraser"></i> Clear
                         </button>
@@ -254,6 +257,10 @@
 
                 $('#notAvailable').on('click', function () {
                     table.column(6).search('^-|^[0]$', true, false).draw();
+                });
+
+                $('#inOrder').on('click', function () {
+                    table.column(8).search('^[1-9][0-9]*$', true, false).draw();
                 });
             });
         </script>
