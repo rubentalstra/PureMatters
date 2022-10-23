@@ -29,6 +29,16 @@
 -- ) DEFAULT CHARSET UTF8 COMMENT 'reserved';
 
 
+-- CREATE TABLE ordered(
+--     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--     amount INT,
+--     notes VARCHAR(255),
+--     product_id int NOT NULL,
+--     create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     update_time DATETIME  NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+-- UPDATE CURRENT_TIMESTAMP
+-- )DEFAULT CHARSET UTF8 COMMENT 'ordered';
+
 -- ALTER TABLE products
 -- ADD COLUMN order_amount int NOT NULL DEFAULT 0 AFTER amount;
 -- ALTER TABLE products
@@ -56,6 +66,11 @@
 
 -- UPDATE products SET
 --     reserved_amount = 2
+--     WHERE 
+--     id = 15;
+
+-- UPDATE products SET
+--     order_amount = 0
 --     WHERE 
 --     id = 15;
 

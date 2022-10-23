@@ -549,8 +549,184 @@ exports.soledReserved = async (req, res) => {
     }
 };
 
-//  History
+//  order
+exports.getProductOrder = async (req, res) => {
+    const { id } = req.params;
 
+    try {
+        poolPromise.query(
+            'SELECT * FROM ordered WHERE product_id = ? ORDER BY create_time asc',
+            [id],
+            function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                // console.log(result);
+                return res.json(result);
+            }
+        );
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+exports.createOrder = async (req, res) => {
+    var { orderAmount, orderNotes, productId, ProductOrderAmount } = req.body;
+
+    const realOrderAmount = +ProductOrderAmount + +orderAmount;
+    try {
+        poolPromise.query(
+            'INSERT INTO ordered (amount,notes,product_id)VALUES (?,?,?)',
+            [orderAmount, orderNotes, productId],
+            function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                if (result.affectedRows == 0) {
+                    return res.sendStatus(400);
+                }
+
+                //  when it's successfully it will go to the next state
+                poolPromise.query(
+                    'UPDATE products SET order_amount = ? WHERE id = ?',
+                    [realOrderAmount, productId],
+                    function (err, result) {
+                        if (err) {
+                            throw err;
+                        }
+                        if (result.affectedRows == 0) {
+                            return res.sendStatus(400);
+                        }
+
+                        return res.redirect('/details/' + productId);
+                    }
+                );
+            }
+        );
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+exports.editOrder = async (req, res) => {
+    var { editOrderId, oldAmountOrderEdit, amountOrderEdit, notesOrderEdit, productId, ProductOrderAmount } =
+        req.body;
+
+    // console.log(amountEdit - oldAmountEdit);
+    const amountChange = amountOrderEdit - oldAmountOrderEdit;
+    const newProductReservedAmount = +ProductOrderAmount + +amountChange;
+    // console.log(ProductOrderAmount + amountChange);
+
+    try {
+        poolPromise.query(
+            'UPDATE ordered SET amount = ?, notes = ? WHERE id = ?',
+            [amountOrderEdit, notesOrderEdit, editOrderId],
+            function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                if (result.affectedRows == 0) {
+                    return res.sendStatus(400);
+                }
+
+                //  when it's successfully it will go to the next state
+                poolPromise.query(
+                    'UPDATE products SET order_amount = ? WHERE id = ?',
+                    [newProductReservedAmount, productId],
+                    function (err, result) {
+                        if (err) {
+                            throw err;
+                        }
+                        if (result.affectedRows == 0) {
+                            return res.sendStatus(400);
+                        }
+
+                        return res.redirect('/details/' + productId);
+                    }
+                );
+            }
+        );
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+exports.delOrder = async (req, res) => {
+    var { delOrderId, delOrderAmount, productId, ProductOrderAmount } = req.body;
+
+    const realReservedAmount = +ProductOrderAmount - +delOrderAmount;
+    // console.log(realReservedAmount);
+
+    try {
+        poolPromise.query('DELETE FROM ordered WHERE id = ?', [delOrderId], function (err, result) {
+            if (err) {
+                throw err;
+            }
+            if (result.affectedRows == 0) {
+                return res.sendStatus(400);
+            }
+
+            //  when it's successfully it will go to the next state
+            poolPromise.query(
+                'UPDATE products SET order_amount = ? WHERE id = ?',
+                [realReservedAmount, productId],
+                function (err, result) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (result.affectedRows == 0) {
+                        return res.sendStatus(400);
+                    }
+
+                    return res.redirect('/details/' + productId);
+                }
+            );
+        });
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+exports.OrderReceived = async (req, res) => {
+    var { receivedId, receivedAmount, productId, ProductAmount, ProductOrderAmount } = req.body;
+
+    const newAmount = +ProductAmount + +receivedAmount;
+    const realOrderAmount = +ProductOrderAmount - +receivedAmount;
+
+    // console.log('ProductAmount: ' + ProductAmount);
+    // console.log('newAmount: ' + newAmount);
+
+    try {
+        poolPromise.query('DELETE FROM ordered WHERE id = ?', [receivedId], function (err, result) {
+            if (err) {
+                throw err;
+            }
+            if (result.affectedRows == 0) {
+                return res.sendStatus(400);
+            }
+
+            //  when it's successfully it will go to the next state
+            poolPromise.query(
+                'UPDATE products SET amount = ?, order_amount = ? WHERE id = ?',
+                [newAmount, realOrderAmount, productId],
+                function (err, result) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (result.affectedRows == 0) {
+                        return res.sendStatus(400);
+                    }
+
+                    return res.redirect('/details/' + productId);
+                }
+            );
+        });
+    } catch (error) {
+        return console.log(error);
+    }
+};
+
+//  History
 exports.getProductHistory = async (req, res) => {
     const { id } = req.params;
 

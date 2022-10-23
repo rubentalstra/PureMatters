@@ -54,6 +54,13 @@ const getRoutes = (mainController, router) => {
     router.post('/api/products/reserved/delete', mainController.delReserved);
     router.post('/api/products/reserved/soled', mainController.soledReserved);
 
+    // order
+    router.get('/api/products/order/:id', mainController.getProductOrder);
+    router.post('/api/products/order/create', mainController.createOrder);
+    router.post('/api/products/order/edit', mainController.editOrder);
+    router.post('/api/products/order/delete', mainController.delOrder);
+    router.post('/api/products/order/received', mainController.OrderReceived);
+
     // system settings
     /// Category
     router.get('/api/settings/categories', mainController.getAllCategories);
