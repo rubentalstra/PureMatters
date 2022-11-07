@@ -12,8 +12,8 @@
                     <input type="hidden" id="productId" name="productId" value="<%= id %>" />
                     <input type="hidden" id="ProductOrderAmount" name="ProductOrderAmount"
                         value="<%= ProductOrderAmount %>" />
-                    <input class="form-control" name="orderAmount" id="orderAmount" value="" placeholder="Hoeveelheid"
-                        required />
+                    <input type="number" min="0" class="form-control" name="orderAmount" id="orderAmount" value=""
+                        placeholder="Hoeveelheid" required />
                     <hr />
                     <textarea name="orderNotes" id="orderNotes" rows="13" style="height: 100%; width: 100%"
                         placeholder="hier kun je de notes kwijt."></textarea>
