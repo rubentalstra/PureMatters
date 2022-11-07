@@ -1,213 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" status="width=device-width, initial-scale=1.0" />
 
-        <title>PureMatters Inventory - Product Details</title>
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" status="width=device-width, initial-scale=1.0" />
 
-        <link rel="stylesheet" href="/css/bootstrap.min.css" />
-        <link href="/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <title>PureMatters Inventory - Product Details</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-        <script defer src="/fontawesome/js/all.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link href="/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 
-        <link rel="stylesheet" href="/app.css" />
-        <link rel="stylesheet" href="/style.css" />
+    <script defer src="/fontawesome/js/all.js"></script>
 
-        <style>
-            .dataTables_filter {
-                display: none;
-            }
-        </style>
-    </head>
+    <link rel="stylesheet" href="/app.css" />
+    <link rel="stylesheet" href="/style.css" />
 
-    <body>
-        <%- include('includes/navbar', {}); %>
+    <style>
+        .dataTables_filter {
+            display: none;
+        }
+    </style>
+</head>
 
-        <div class="row" style="margin: auto">
-            <div id="card-div" class="col-md-12" style="margin-bottom: 0px !important">
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex flex-column align-items-center text-center">
-                                    <i class="fa-solid fa-warehouse fa-8x"></i>
-                                    <div class="mt-3">
-                                        <h4><%= details[0]['name'] %></h4>
+<body>
+    <%- include('includes/navbar', {}); %>
 
-                                        <br />
-                                        <p class="text-muted font-size-sm"></p>
+    <div class="row" style="margin: auto">
+        <div id="card-div" class="col-md-12" style="margin-bottom: 0px !important">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <i class="fa-solid fa-warehouse fa-8x"></i>
+                                <div class="mt-3">
+                                    <h4><%= details[0]['name'] %></h4>
 
-                                        <div class="btn-group mr-2" role="group" aria-label="Third group">
-                                            <button
-                                                class="btn btn-primary"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#sold"
-                                            >
-                                                <i class="fa-solid fa-bag-shopping"></i> Product Verkocht
-                                            </button>
-                                            <button
-                                                class="btn btn-outline-primary"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#newStock"
-                                            >
-                                                <i class="fa-solid fa-box-open"></i> Voorraad Toevoegen
-                                            </button>
+                                    <br />
+                                    <p class="text-muted font-size-sm"></p>
+
+                                    <div class="btn-group mr-2" role="group" aria-label="Third group">
+                                        <button class="btn btn-primary" data-bs-toggle="collapse"
+                                            data-bs-target="#sold">
+                                            <i class="fa-solid fa-bag-shopping"></i> Product Verkocht
+                                        </button>
+                                        <button class="btn btn-outline-primary" data-bs-toggle="collapse"
+                                            data-bs-target="#newStock">
+                                            <i class="fa-solid fa-box-open"></i> Voorraad Toevoegen
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="sold" class="collapse">
+                                    <br />
+                                    <h3>Product Verkocht</h3>
+                                    <form action="/api/products/<%= details[0]['id'] %>" method="post">
+                                        <input type="hidden" id="type" name="type" value="sold" />
+
+                                        <input type="hidden" id="oldAmount" name="oldAmount"
+                                            value="<%= details[0]['amount'] %>" />
+
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="soldAmount">#</span>
+                                            <input min="1" type="number" class="form-control"
+                                                placeholder="Aantal Verkocht" aria-label="Aantal Verkocht"
+                                                aria-describedby="soldAmount" id="soldAmount" name="diffAmount" />
                                         </div>
-                                    </div>
-                                    <div id="sold" class="collapse">
-                                        <br />
-                                        <h3>Product Verkocht</h3>
-                                        <form action="/api/products/<%= details[0]['id'] %>" method="post">
-                                            <input type="hidden" id="type" name="type" value="sold" />
 
-                                            <input
-                                                type="hidden"
-                                                id="oldAmount"
-                                                name="oldAmount"
-                                                value="<%= details[0]['amount'] %>"
-                                            />
+                                        <button type="submit" class="btn btn-secondary">Submit</button>
+                                    </form>
+                                </div>
+                                <div id="newStock" class="collapse">
+                                    <br />
+                                    <h3>Voorraad Toevoegen</h3>
+                                    <form action="/api/products/<%= details[0]['id'] %>" method="post">
+                                        <input type="hidden" id="type" name="type" value="add" />
 
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="soldAmount">#</span>
-                                                <input
-                                                    min="1"
-                                                    type="number"
-                                                    class="form-control"
-                                                    placeholder="Aantal Verkocht"
-                                                    aria-label="Aantal Verkocht"
-                                                    aria-describedby="soldAmount"
-                                                    id="soldAmount"
-                                                    name="diffAmount"
-                                                />
-                                            </div>
+                                        <input type="hidden" id="oldAmount" name="oldAmount"
+                                            value="<%= details[0]['amount'] %>" />
 
-                                            <button type="submit" class="btn btn-secondary">Submit</button>
-                                        </form>
-                                    </div>
-                                    <div id="newStock" class="collapse">
-                                        <br />
-                                        <h3>Voorraad Toevoegen</h3>
-                                        <form action="/api/products/<%= details[0]['id'] %>" method="post">
-                                            <input type="hidden" id="type" name="type" value="add" />
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="addAmount">#</span>
+                                            <input min="1" type="number" class="form-control"
+                                                placeholder="Voorraad Toevoegen" aria-label="Voorraad Toevoegen"
+                                                aria-describedby="addAmount" id="addAmount" name="diffAmount" />
+                                        </div>
 
-                                            <input
-                                                type="hidden"
-                                                id="oldAmount"
-                                                name="oldAmount"
-                                                value="<%= details[0]['amount'] %>"
-                                            />
-
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="addAmount">#</span>
-                                                <input
-                                                    min="1"
-                                                    type="number"
-                                                    class="form-control"
-                                                    placeholder="Voorraad Toevoegen"
-                                                    aria-label="Voorraad Toevoegen"
-                                                    aria-describedby="addAmount"
-                                                    id="addAmount"
-                                                    name="diffAmount"
-                                                />
-                                            </div>
-
-                                            <button type="submit" class="btn btn-secondary">Submit</button>
-                                        </form>
-                                    </div>
+                                        <button type="submit" class="btn btn-secondary">Submit</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                        <!--  -->
                     </div>
                     <!--  -->
+                </div>
+                <!--  -->
 
-                    <div class="col-md-8">
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-3"><h6 class="mb-0">Naam</h6></div>
-                                    <div class="col-sm-9 text-secondary"><%= details[0]['name'] %></div>
+                <div class="col-md-8">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Naam</h6>
                                 </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-sm-3"><h6 class="mb-0">Fabrikant</h6></div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <b><%= details[0]['manufacturer'] %></b>
-                                    </div>
+                                <div class="col-sm-9 text-secondary"><%= details[0]['name'] %></div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Fabrikant</h6>
                                 </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-sm-3"><h6 class="mb-0">Geslacht</h6></div>
-                                    <div class="col-sm-9 text-secondary"><%= details[0]['sex'] %></div>
+                                <div class="col-sm-9 text-secondary">
+                                    <b><%= details[0]['manufacturer'] %></b>
                                 </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-sm-3"><h6 class="mb-0">Categorie</h6></div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <i class="fa-solid fa-tag"></i> <%= details[0]['category'] %>
-                                    </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Geslacht</h6>
                                 </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-sm-3"><h6 class="mb-0">Kleur</h6></div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <b><%= details[0]['color'] %></b>
-                                    </div>
+                                <div class="col-sm-9 text-secondary"><%= details[0]['sex'] %></div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Categorie</h6>
                                 </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-sm-3"><h6 class="mb-0">Maat</h6></div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <b><%= details[0]['size'] %></b>
-                                    </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <i class="fa-solid fa-tag"></i> <%= details[0]['category'] %>
                                 </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-sm-3"><h6 class="mb-0">Hoeveelheid</h6></div>
-                                    <div
-                                        class="col-sm-9 <% if(details[0]['amount'] < 0){%> text-danger <%}else{%> text-secondary <%} %>"
-                                    >
-                                        <b><%= details[0]['amount'] %></b>
-                                    </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Kleur</h6>
                                 </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-sm-3"><h6 class="mb-0">Gereserveerd</h6></div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <div class="row">
-                                            <div class="col-sm-3"><%= details[0]['reserved_amount'] %></div>
-                                            <div class="col-sm-6">
-                                                <div style="float: right">
-                                                    <button
-                                                        type="button"
-                                                        class="btn btn-success createReserved"
-                                                    >
-                                                        <i class="fa-solid fa-plus"></i> Reservering Toevoegen
-                                                    </button>
-                                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <b><%= details[0]['color'] %></b>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Maat</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <b><%= details[0]['size'] %></b>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Hoeveelheid</h6>
+                                </div>
+                                <div
+                                    class="col-sm-9 <% if(details[0]['amount'] < 0){%> text-danger <%}else{%> text-secondary <%} %>">
+                                    <b><%= details[0]['amount'] %></b>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Gereserveerd</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <div class="row">
+                                        <div class="col-sm-3"><%= details[0]['reserved_amount'] %></div>
+                                        <div class="col-sm-6">
+                                            <div style="float: right">
+                                                <button type="button" class="btn btn-success createReserved">
+                                                    <i class="fa-solid fa-plus"></i> Reservering Toevoegen
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-sm-3"><h6 class="mb-0">Besteld</h6></div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <div class="row">
-                                            <div class="col-sm-3"><%= details[0]['order_amount'] %></div>
-                                            <div class="col-sm-6">
-                                                <div style="float: right">
-                                                    <button type="button" class="btn btn-success createOrder">
-                                                        <i class="fa-solid fa-dolly"></i> Bestelling Toevoegen
-                                                    </button>
-                                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Besteld</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <div class="row">
+                                        <div class="col-sm-3"><%= details[0]['order_amount'] %></div>
+                                        <div class="col-sm-6">
+                                            <div style="float: right">
+                                                <button type="button" class="btn btn-success createOrder">
+                                                    <i class="fa-solid fa-dolly"></i> Bestelling Toevoegen
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <hr />
+                            </div>
+                            <!-- <hr />
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <a
@@ -218,518 +205,523 @@
                                         >
                                     </div>
                                 </div> -->
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- reserved Lijst -->
-        <div class="row" style="margin: auto; padding-bottom: 10px">
-            <div class="col-md-12">
-                <!-- DataTable -->
-                <div class="clearfix">
-                    <div style="float: left"><h2>Reservering Lijst</h2></div>
-                    <div style="float: right">
-                        <!--  -->
-                    </div>
+    <!-- reserved Lijst -->
+    <div class="row" style="margin: auto; padding-bottom: 10px">
+        <div class="col-md-12">
+            <!-- DataTable -->
+            <div class="clearfix">
+                <div style="float: left">
+                    <h2>Reservering Lijst</h2>
                 </div>
+                <div style="float: right">
+                    <!--  -->
+                </div>
+            </div>
 
-                <div class="row" style="margin: auto">
-                    <div id="card-div" class="col-md-12" style="margin-top: 40px !important">
-                        <table id="table_reserved" class="table table-striped" style="width: 100%">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Hoeveelheid</th>
-                                    <th>Notes</th>
-                                    <th>Datum</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th class="text_search">Notes</th>
-                                    <th class="text_search">Datum</th>
-                                    <th></th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+            <div class="row" style="margin: auto">
+                <div id="card-div" class="col-md-12" style="margin-top: 40px !important">
+                    <table id="table_reserved" class="table table-striped" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Hoeveelheid</th>
+                                <th>Notes</th>
+                                <th>Datum</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th class="text_search">Notes</th>
+                                <th class="text_search">Datum</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Bestelling Lijst -->
-        <div class="row" style="margin: auto; padding-bottom: 10px">
-            <div class="col-md-12">
-                <!-- DataTable -->
-                <div class="clearfix">
-                    <div style="float: left"><h2>Bestelling Lijst</h2></div>
-                    <div style="float: right">
-                        <!--  -->
-                    </div>
+    <!-- Bestelling Lijst -->
+    <div class="row" style="margin: auto; padding-bottom: 10px">
+        <div class="col-md-12">
+            <!-- DataTable -->
+            <div class="clearfix">
+                <div style="float: left">
+                    <h2>Bestelling Lijst</h2>
                 </div>
+                <div style="float: right">
+                    <!--  -->
+                </div>
+            </div>
 
-                <div class="row" style="margin: auto">
-                    <div id="card-div" class="col-md-12" style="margin-top: 40px !important">
-                        <table id="table_order" class="table table-striped" style="width: 100%">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Hoeveelheid</th>
-                                    <th>Notes</th>
-                                    <th>Aangemaakt op</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th class="text_search">Notes</th>
-                                    <th class="text_search">Datum</th>
-                                    <th></th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+            <div class="row" style="margin: auto">
+                <div id="card-div" class="col-md-12" style="margin-top: 40px !important">
+                    <table id="table_order" class="table table-striped" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Hoeveelheid</th>
+                                <th>Notes</th>
+                                <th>Aangemaakt op</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th class="text_search">Notes</th>
+                                <th class="text_search">Datum</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="row" style="margin: auto">
-            <div id="card-div" class="col-md-12" style="margin-top: 40px !important">
-                <table id="table_id" class="table table-striped" style="width: 100%">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nieuwe Voorraad</th>
-                            <th>Oude Voorraad</th>
-                            <th>Toegevoegd / verkocht</th>
-                            <th>Datum</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th>Toegevoegd / verkocht</th>
-                            <th class="text_search">Datum</th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+    <div class="row" style="margin: auto">
+        <div id="card-div" class="col-md-12" style="margin-top: 40px !important">
+            <table id="table_id" class="table table-striped" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nieuwe Voorraad</th>
+                        <th>Oude Voorraad</th>
+                        <th>Toegevoegd / verkocht</th>
+                        <th>Datum</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>Toegevoegd / verkocht</th>
+                        <th class="text_search">Datum</th>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
+    </div>
 
-        <!-- Modals Reserved -->
-        <!-- Create -->
-        <%- include('modals/reserved/create', {id: details[0]['id'], ProductReservedAmount:
+    <!-- Modals Reserved -->
+    <!-- Create -->
+    <%- include('modals/reserved/create', {id: details[0]['id'], ProductReservedAmount:
         details[0]['reserved_amount'] }); %>
-        <!-- Edit -->
-        <%- include('modals/reserved/edit', {id: details[0]['id'], ProductReservedAmount:
+    <!-- Edit -->
+    <%- include('modals/reserved/edit', {id: details[0]['id'], ProductReservedAmount:
         details[0]['reserved_amount'] }); %>
-        <!-- Delete -->
-        <%- include('modals/reserved/delete', {id: details[0]['id'], ProductReservedAmount:
+    <!-- Delete -->
+    <%- include('modals/reserved/delete', {id: details[0]['id'], ProductReservedAmount:
         details[0]['reserved_amount'] }); %>
-        <!-- Soled -->
-        <%- include('modals/reserved/soled', {id: details[0]['id'], ProductReservedAmount:
+    <!-- Soled -->
+    <%- include('modals/reserved/soled', {id: details[0]['id'], ProductReservedAmount:
         details[0]['reserved_amount'], ProductAmount: details[0]['amount'] }); %>
 
-        <!-- Modals Order -->
-        <!-- Create -->
-        <%- include('modals/order/create', {id: details[0]['id'], ProductOrderAmount:
+    <!-- Modals Order -->
+    <!-- Create -->
+    <%- include('modals/order/create', {id: details[0]['id'], ProductOrderAmount:
         details[0]['order_amount'] }); %>
-        <!-- Edit -->
-        <%- include('modals/order/edit', {id: details[0]['id'], ProductOrderAmount: details[0]['order_amount']
+    <!-- Edit -->
+    <%- include('modals/order/edit', {id: details[0]['id'], ProductOrderAmount: details[0]['order_amount']
         }); %>
-        <!-- Delete -->
-        <%- include('modals/order/delete', {id: details[0]['id'], ProductOrderAmount:
+    <!-- Delete -->
+    <%- include('modals/order/delete', {id: details[0]['id'], ProductOrderAmount:
         details[0]['order_amount'] }); %>
-        <!-- Soled -->
-        <%- include('modals/order/received', {id: details[0]['id'], ProductOrderAmount:
+    <!-- Soled -->
+    <%- include('modals/order/received', {id: details[0]['id'], ProductOrderAmount:
         details[0]['order_amount'], ProductAmount: details[0]['amount'] }); %>
 
-        <!--  -->
-        <%- include('includes/footer'); %>
+    <!--  -->
+    <%- include('includes/footer'); %>
 
-        <!-- importing bootstrap.js and supporting js libraries -->
-        <script src="/js/jquery.min.js"></script>
-        <script src="/jquery.dataTables.min.js"></script>
-        <script src="/js/dataTables.bootstrap5.min.js"></script>
-        <script src="/js/popper.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
+    <!-- importing bootstrap.js and supporting js libraries -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/jquery.dataTables.min.js"></script>
+    <script src="/js/dataTables.bootstrap5.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 
-        <script>
-            $(document).ready(function () {
-                $.fn.dataTable.ext.errMode = 'none';
+    <script>
+        $(document).ready(function () {
+            $.fn.dataTable.ext.errMode = 'none';
 
-                $('#table_reserved').on('error.dt', function (e, settings, techNote, message) {
-                    console.log('An error has been reported by DataTables: ', message);
-                });
-
-                // Create search inputs in footer
-                $('#table_reserved tfoot th').each(function () {
-                    var title = $(this).text();
-                    if ($(this)[0].className === 'text_search') {
-                        $(this).html('<input type="text" placeholder="Zoek ' + title + '" />');
-                    }
-                });
-
-                // DataTable initialisation
-                var table = $('#table_reserved').DataTable({
-                    paging: true,
-                    autoWidth: true,
-                    ajax: {
-                        type: 'GET',
-                        url: '/api/products/reserved/<%= id %>',
-                        dataSrc: function (json) {
-                            // console.log(json);
-                            return json;
-                        },
-                    },
-
-                    columns: [
-                        {
-                            data: 'id',
-                            render: function (data, type, full, meta) {
-                                return meta.row + 1;
-                            },
-                        },
-                        { data: 'amount' },
-                        { data: 'notes' },
-                        {
-                            data: 'update_time',
-                            render: function (data, type, row) {
-                                return (
-                                    new Date(data).toLocaleDateString('nl-nl') +
-                                    ' ' +
-                                    new Date(data).toLocaleTimeString('nl-nl')
-                                );
-                            },
-                        },
-                        {
-                            data: 'id',
-                            render: function (data, type, row, meta) {
-                                return (
-                                    // Edit
-                                    ' <button type="button" class="btn btn-warning editReserved" edit-id="' +
-                                    data +
-                                    '" edit-amount="' +
-                                    row['amount'] +
-                                    '" edit-notes="' +
-                                    row['notes'] +
-                                    '" ><i class="fa-solid fa-pen"></i> Bewerken</button>' +
-                                    // Cancel
-                                    ' <button type="button" class="btn btn-danger delReserved" edit-id="' +
-                                    data +
-                                    '" edit-amount="' +
-                                    row['amount'] +
-                                    '" edit-notes="' +
-                                    row['notes'] +
-                                    '" ><i class="fa-solid fa-trash-can"></i> Annuleren</button>' +
-                                    // Soled
-                                    ' <button type="button" class="btn btn-success soledReserved" edit-id="' +
-                                    data +
-                                    '" edit-amount="' +
-                                    row['amount'] +
-                                    '" edit-notes="' +
-                                    row['notes'] +
-                                    '" ><i class="fa-solid fa-basket-shopping"></i> Verkocht</button>'
-                                );
-                            },
-                        },
-                    ],
-                    aaSorting: [],
-
-                    createdRow: function (row, data, index) {
-                        if (data['diff_amount'] > 0) {
-                            $('td', row).eq(3).addClass('text-success font-weight-bold');
-                        }
-                    },
-                    initComplete: function (settings, json) {
-                        var footer = $('#table_reserved tfoot tr');
-                        $('#table_reserved thead').append(footer);
-                    },
-                });
-                // Apply the search
-                $('#table_reserved thead').on('keyup', 'input', function () {
-                    table.column($(this).parent().index()).search(this.value).draw();
-                });
-
-                // Manufacturers
-                $('body').on('click', '.createReserved', function () {
-                    $('#createReserved').modal('show');
-                });
-                $('body').on('click', '.editReserved', function () {
-                    var id = $(this).attr('edit-id');
-                    $('#id').val(id);
-                    var amount = $(this).attr('edit-amount');
-                    $('#amountEdit').val(amount);
-                    $('#oldAmountEdit').val(amount);
-                    var notes = $(this).attr('edit-notes');
-                    $('#notesEdit').val(notes);
-                    $('#editReservedModal').modal('show');
-                });
-                $('body').on('click', '.delReserved', function () {
-                    var id = $(this).attr('edit-id');
-                    $('#delId').val(id);
-                    var amount = $(this).attr('edit-amount');
-                    $('#delAmount').val(amount);
-                    var notes = $(this).attr('edit-notes');
-                    $('#delNotes').val(notes);
-
-                    $('#delReserved').modal('show');
-                });
-
-                $('body').on('click', '.soledReserved', function () {
-                    var id = $(this).attr('edit-id');
-                    $('#soledId').val(id);
-                    var amount = $(this).attr('edit-amount');
-                    $('#soledAmount').val(amount);
-                    var notes = $(this).attr('edit-notes');
-                    $('#soledNotes').val(notes);
-
-                    $('#soledReserved').modal('show');
-                });
+            $('#table_reserved').on('error.dt', function (e, settings, techNote, message) {
+                console.log('An error has been reported by DataTables: ', message);
             });
-        </script>
 
-        <!-- Order -->
-        <script>
-            $(document).ready(function () {
-                $.fn.dataTable.ext.errMode = 'none';
-
-                $('#table_order').on('error.dt', function (e, settings, techNote, message) {
-                    console.log('An error has been reported by DataTables: ', message);
-                });
-
-                // Create search inputs in footer
-                $('#table_order tfoot th').each(function () {
-                    var title = $(this).text();
-                    if ($(this)[0].className === 'text_search') {
-                        $(this).html('<input type="text" placeholder="Zoek ' + title + '" />');
-                    }
-                });
-
-                // DataTable initialisation
-                var table = $('#table_order').DataTable({
-                    paging: true,
-                    autoWidth: true,
-                    ajax: {
-                        type: 'GET',
-                        url: '/api/products/order/<%= id %>',
-                        dataSrc: function (json) {
-                            // console.log(json);
-                            return json;
-                        },
-                    },
-
-                    columns: [
-                        {
-                            data: 'id',
-                            render: function (data, type, full, meta) {
-                                return meta.row + 1;
-                            },
-                        },
-                        { data: 'amount' },
-                        { data: 'notes' },
-                        {
-                            data: 'create_time',
-                            render: function (data, type, row) {
-                                return (
-                                    new Date(data).toLocaleDateString('nl-nl') +
-                                    ' ' +
-                                    new Date(data).toLocaleTimeString('nl-nl')
-                                );
-                            },
-                        },
-                        {
-                            data: 'id',
-                            render: function (data, type, row, meta) {
-                                return (
-                                    // Edit
-                                    ' <button type="button" class="btn btn-warning editOrder" edit-id="' +
-                                    data +
-                                    '" edit-amount="' +
-                                    row['amount'] +
-                                    '" edit-notes="' +
-                                    row['notes'] +
-                                    '" ><i class="fa-solid fa-pen"></i> Bewerken</button>' +
-                                    // Cancel
-                                    ' <button type="button" class="btn btn-danger delOrder" edit-id="' +
-                                    data +
-                                    '" edit-amount="' +
-                                    row['amount'] +
-                                    '" edit-notes="' +
-                                    row['notes'] +
-                                    '" ><i class="fa-solid fa-trash-can"></i> Annuleren</button>' +
-                                    // received
-                                    ' <button type="button" class="btn btn-success receivedOrder" edit-id="' +
-                                    data +
-                                    '" edit-amount="' +
-                                    row['amount'] +
-                                    '" edit-notes="' +
-                                    row['notes'] +
-                                    '" ><i class="fa-solid fa-box-open"></i> Ontvangen</button>'
-                                );
-                            },
-                        },
-                    ],
-                    aaSorting: [],
-
-                    createdRow: function (row, data, index) {
-                        if (data['diff_amount'] > 0) {
-                            $('td', row).eq(3).addClass('text-success font-weight-bold');
-                        }
-                    },
-                    initComplete: function (settings, json) {
-                        var footer = $('#table_order tfoot tr');
-                        $('#table_order thead').append(footer);
-                    },
-                });
-                // Apply the search
-                $('#table_order thead').on('keyup', 'input', function () {
-                    table.column($(this).parent().index()).search(this.value).draw();
-                });
-
-                // Manufacturers
-                $('body').on('click', '.createOrder', function () {
-                    $('#createOrder').modal('show');
-                });
-                $('body').on('click', '.editOrder', function () {
-                    var id = $(this).attr('edit-id');
-                    $('#editOrderId').val(id);
-                    var amount = $(this).attr('edit-amount');
-                    $('#amountOrderEdit').val(amount);
-                    $('#oldAmountOrderEdit').val(amount);
-                    var notes = $(this).attr('edit-notes');
-                    $('#notesOrderEdit').val(notes);
-                    $('#editOrder').modal('show');
-                });
-                $('body').on('click', '.delOrder', function () {
-                    var id = $(this).attr('edit-id');
-                    $('#delOrderId').val(id);
-                    var amount = $(this).attr('edit-amount');
-                    $('#delOrderAmount').val(amount);
-                    var notes = $(this).attr('edit-notes');
-                    $('#delOrderNotes').val(notes);
-
-                    $('#delOrder').modal('show');
-                });
-
-                $('body').on('click', '.receivedOrder', function () {
-                    var id = $(this).attr('edit-id');
-                    $('#receivedId').val(id);
-                    var amount = $(this).attr('edit-amount');
-                    $('#receivedAmount').val(amount);
-                    var notes = $(this).attr('edit-notes');
-                    $('#receivedNotes').val(notes);
-
-                    $('#receivedOrder').modal('show');
-                });
+            // Create search inputs in footer
+            $('#table_reserved tfoot th').each(function () {
+                var title = $(this).text();
+                if ($(this)[0].className === 'text_search') {
+                    $(this).html('<input type="text" placeholder="Zoek ' + title + '" />');
+                }
             });
-        </script>
 
-        <script>
-            $(document).ready(function () {
-                $.fn.dataTable.ext.errMode = 'none';
+            // DataTable initialisation
+            var table = $('#table_reserved').DataTable({
+                paging: true,
+                autoWidth: true,
+                ajax: {
+                    type: 'GET',
+                    url: '/api/products/reserved/<%= id %>',
+                    dataSrc: function (json) {
+                        // console.log(json);
+                        return json;
+                    },
+                },
 
-                $('#table_id').on('error.dt', function (e, settings, techNote, message) {
-                    console.log('An error has been reported by DataTables: ', message);
-                });
+                columns: [
+                    {
+                        data: 'id',
+                        render: function (data, type, full, meta) {
+                            return meta.row + 1;
+                        },
+                    },
+                    { data: 'amount' },
+                    { data: 'notes' },
+                    {
+                        data: 'update_time',
+                        render: function (data, type, row) {
+                            return (
+                                new Date(data).toLocaleDateString('nl-nl') +
+                                ' ' +
+                                new Date(data).toLocaleTimeString('nl-nl')
+                            );
+                        },
+                    },
+                    {
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            return (
+                                // Edit
+                                ' <button type="button" class="btn btn-warning editReserved" edit-id="' +
+                                data +
+                                '" edit-amount="' +
+                                row['amount'] +
+                                '" edit-notes="' +
+                                row['notes'] +
+                                '" ><i class="fa-solid fa-pen"></i> Bewerken</button>' +
+                                // Cancel
+                                ' <button type="button" class="btn btn-danger delReserved" edit-id="' +
+                                data +
+                                '" edit-amount="' +
+                                row['amount'] +
+                                '" edit-notes="' +
+                                row['notes'] +
+                                '" ><i class="fa-solid fa-trash-can"></i> Annuleren</button>' +
+                                // Soled
+                                ' <button type="button" class="btn btn-success soledReserved" edit-id="' +
+                                data +
+                                '" edit-amount="' +
+                                row['amount'] +
+                                '" edit-notes="' +
+                                row['notes'] +
+                                '" ><i class="fa-solid fa-basket-shopping"></i> Verkocht</button>'
+                            );
+                        },
+                    },
+                ],
+                aaSorting: [],
 
-                // Create search inputs in footer
-                $('#table_id tfoot th').each(function () {
-                    var title = $(this).text();
-                    if ($(this)[0].className === 'text_search') {
-                        $(this).html('<input type="text" placeholder="Zoek ' + title + '" />');
+                createdRow: function (row, data, index) {
+                    if (data['diff_amount'] > 0) {
+                        $('td', row).eq(3).addClass('text-success font-weight-bold');
                     }
-                });
-
-                // DataTable initialisation
-                var table = $('#table_id').DataTable({
-                    paging: true,
-                    autoWidth: true,
-                    ajax: {
-                        type: 'GET',
-                        url: '/api/products/history/<%= id %>',
-                        dataSrc: function (json) {
-                            // console.log(json);
-                            return json;
-                        },
-                    },
-
-                    columns: [
-                        {
-                            data: 'id',
-                            render: function (data, type, full, meta) {
-                                return meta.row + 1;
-                            },
-                        },
-                        { data: 'new_amount' },
-                        { data: 'old_amount' },
-                        { data: 'diff_amount' },
-                        {
-                            data: 'last_modified_dt',
-                            render: function (data, type, row) {
-                                return (
-                                    new Date(data).toLocaleDateString('nl-nl') +
-                                    ' ' +
-                                    new Date(data).toLocaleTimeString('nl-nl')
-                                );
-                            },
-                        },
-                    ],
-                    aaSorting: [],
-
-                    createdRow: function (row, data, index) {
-                        if (data['diff_amount'] > 0) {
-                            $('td', row).eq(3).addClass('text-success font-weight-bold');
-                        }
-                    },
-                    initComplete: function (settings, json) {
-                        var footer = $('#table_id tfoot tr');
-                        $('#table_id thead').append(footer);
-
-                        this.api()
-                            .columns(3)
-                            .every(function () {
-                                var column = this;
-                                var colTitle = this.header().innerHTML;
-                                var select = $(
-                                    '<select><option value="">Select ' + colTitle + '</option></select>'
-                                )
-                                    .appendTo($(column.footer()).empty())
-                                    .on('change', function () {
-                                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                                        column.search(val ? '^' + val + '$' : '', true, false).draw();
-                                    });
-
-                                column
-                                    .data()
-                                    .unique()
-                                    .sort()
-                                    .each(function (d, j) {
-                                        select.append('<option value="' + d + '">' + d + '</option>');
-                                    });
-                            });
-                    },
-                });
-                // Apply the search
-                $('#table_id thead').on('keyup', 'input', function () {
-                    table.column($(this).parent().index()).search(this.value).draw();
-                });
-
-                $('.btn-primary, .btn-outline-primary').on('click', function () {
-                    $('.collapse').collapse('hide');
-                });
+                },
+                initComplete: function (settings, json) {
+                    var footer = $('#table_reserved tfoot tr');
+                    $('#table_reserved thead').append(footer);
+                },
             });
-        </script>
-    </body>
+            // Apply the search
+            $('#table_reserved thead').on('keyup', 'input', function () {
+                table.column($(this).parent().index()).search(this.value).draw();
+            });
+
+            // Manufacturers
+            $('body').on('click', '.createReserved', function () {
+                $('#createReserved').modal('show');
+            });
+            $('body').on('click', '.editReserved', function () {
+                var id = $(this).attr('edit-id');
+                $('#id').val(id);
+                var amount = $(this).attr('edit-amount');
+                $('#amountEdit').val(amount);
+                $('#oldAmountEdit').val(amount);
+                var notes = $(this).attr('edit-notes');
+                $('#notesEdit').val(notes);
+                $('#editReservedModal').modal('show');
+            });
+            $('body').on('click', '.delReserved', function () {
+                var id = $(this).attr('edit-id');
+                $('#delId').val(id);
+                var amount = $(this).attr('edit-amount');
+                $('#delAmount').val(amount);
+                var notes = $(this).attr('edit-notes');
+                $('#delNotes').val(notes);
+
+                $('#delReserved').modal('show');
+            });
+
+            $('body').on('click', '.soledReserved', function () {
+                var id = $(this).attr('edit-id');
+                $('#soledId').val(id);
+                var amount = $(this).attr('edit-amount');
+                $('#soledAmount').val(amount);
+                var notes = $(this).attr('edit-notes');
+                $('#soledNotes').val(notes);
+
+                $('#soledReserved').modal('show');
+            });
+        });
+    </script>
+
+    <!-- Order -->
+    <script>
+        $(document).ready(function () {
+            $.fn.dataTable.ext.errMode = 'none';
+
+            $('#table_order').on('error.dt', function (e, settings, techNote, message) {
+                console.log('An error has been reported by DataTables: ', message);
+            });
+
+            // Create search inputs in footer
+            $('#table_order tfoot th').each(function () {
+                var title = $(this).text();
+                if ($(this)[0].className === 'text_search') {
+                    $(this).html('<input type="text" placeholder="Zoek ' + title + '" />');
+                }
+            });
+
+            // DataTable initialisation
+            var table = $('#table_order').DataTable({
+                paging: true,
+                autoWidth: true,
+                ajax: {
+                    type: 'GET',
+                    url: '/api/products/order/<%= id %>',
+                    dataSrc: function (json) {
+                        // console.log(json);
+                        return json;
+                    },
+                },
+
+                columns: [
+                    {
+                        data: 'id',
+                        render: function (data, type, full, meta) {
+                            return meta.row + 1;
+                        },
+                    },
+                    { data: 'amount' },
+                    { data: 'notes' },
+                    {
+                        data: 'create_time',
+                        render: function (data, type, row) {
+                            return (
+                                new Date(data).toLocaleDateString('nl-nl') +
+                                ' ' +
+                                new Date(data).toLocaleTimeString('nl-nl')
+                            );
+                        },
+                    },
+                    {
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            return (
+                                // Edit
+                                ' <button type="button" class="btn btn-warning editOrder" edit-id="' +
+                                data +
+                                '" edit-amount="' +
+                                row['amount'] +
+                                '" edit-notes="' +
+                                row['notes'] +
+                                '" ><i class="fa-solid fa-pen"></i> Bewerken</button>' +
+                                // Cancel
+                                ' <button type="button" class="btn btn-danger delOrder" edit-id="' +
+                                data +
+                                '" edit-amount="' +
+                                row['amount'] +
+                                '" edit-notes="' +
+                                row['notes'] +
+                                '" ><i class="fa-solid fa-trash-can"></i> Annuleren</button>' +
+                                // received
+                                ' <button type="button" class="btn btn-success receivedOrder" edit-id="' +
+                                data +
+                                '" edit-amount="' +
+                                row['amount'] +
+                                '" edit-notes="' +
+                                row['notes'] +
+                                '" ><i class="fa-solid fa-box-open"></i> Ontvangen</button>'
+                            );
+                        },
+                    },
+                ],
+                aaSorting: [],
+
+                createdRow: function (row, data, index) {
+                    if (data['diff_amount'] > 0) {
+                        $('td', row).eq(3).addClass('text-success font-weight-bold');
+                    }
+                },
+                initComplete: function (settings, json) {
+                    var footer = $('#table_order tfoot tr');
+                    $('#table_order thead').append(footer);
+                },
+            });
+            // Apply the search
+            $('#table_order thead').on('keyup', 'input', function () {
+                table.column($(this).parent().index()).search(this.value).draw();
+            });
+
+            // Manufacturers
+            $('body').on('click', '.createOrder', function () {
+                $('#createOrder').modal('show');
+            });
+            $('body').on('click', '.editOrder', function () {
+                var id = $(this).attr('edit-id');
+                $('#editOrderId').val(id);
+                var amount = $(this).attr('edit-amount');
+                $('#amountOrderEdit').val(amount);
+                $('#oldAmountOrderEdit').val(amount);
+                var notes = $(this).attr('edit-notes');
+                $('#notesOrderEdit').val(notes);
+                $('#editOrder').modal('show');
+            });
+            $('body').on('click', '.delOrder', function () {
+                var id = $(this).attr('edit-id');
+                $('#delOrderId').val(id);
+                var amount = $(this).attr('edit-amount');
+                $('#delOrderAmount').val(amount);
+                var notes = $(this).attr('edit-notes');
+                $('#delOrderNotes').val(notes);
+
+                $('#delOrder').modal('show');
+            });
+
+            $('body').on('click', '.receivedOrder', function () {
+                var id = $(this).attr('edit-id');
+                $('#receivedId').val(id);
+                var amount = $(this).attr('edit-amount');
+                $('#receivedAmount').val(amount);
+                var notes = $(this).attr('edit-notes');
+                $('#receivedNotes').val(notes);
+
+                $('#receivedOrder').modal('show');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $.fn.dataTable.ext.errMode = 'none';
+
+            $('#table_id').on('error.dt', function (e, settings, techNote, message) {
+                console.log('An error has been reported by DataTables: ', message);
+            });
+
+            // Create search inputs in footer
+            $('#table_id tfoot th').each(function () {
+                var title = $(this).text();
+                if ($(this)[0].className === 'text_search') {
+                    $(this).html('<input type="text" placeholder="Zoek ' + title + '" />');
+                }
+            });
+
+            // DataTable initialisation
+            var table = $('#table_id').DataTable({
+                paging: true,
+                autoWidth: true,
+                ajax: {
+                    type: 'GET',
+                    url: '/api/products/history/<%= id %>',
+                    dataSrc: function (json) {
+                        // console.log(json);
+                        return json;
+                    },
+                },
+
+                columns: [
+                    {
+                        data: 'id',
+                        render: function (data, type, full, meta) {
+                            return meta.row + 1;
+                        },
+                    },
+                    { data: 'new_amount' },
+                    { data: 'old_amount' },
+                    { data: 'diff_amount' },
+                    {
+                        data: 'last_modified_dt',
+                        render: function (data, type, row) {
+                            return (
+                                new Date(data).toLocaleDateString('nl-nl') +
+                                ' ' +
+                                new Date(data).toLocaleTimeString('nl-nl')
+                            );
+                        },
+                    },
+                ],
+                aaSorting: [],
+
+                createdRow: function (row, data, index) {
+                    if (data['diff_amount'] > 0) {
+                        $('td', row).eq(3).addClass('text-success font-weight-bold');
+                    }
+                },
+                initComplete: function (settings, json) {
+                    var footer = $('#table_id tfoot tr');
+                    $('#table_id thead').append(footer);
+
+                    this.api()
+                        .columns(3)
+                        .every(function () {
+                            var column = this;
+                            var colTitle = this.header().innerHTML;
+                            var select = $(
+                                '<select><option value="">Select ' + colTitle + '</option></select>'
+                            )
+                                .appendTo($(column.footer()).empty())
+                                .on('change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                    column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                });
+
+                            column
+                                .data()
+                                .unique()
+                                .sort()
+                                .each(function (d, j) {
+                                    select.append('<option value="' + d + '">' + d + '</option>');
+                                });
+                        });
+                },
+            });
+            // Apply the search
+            $('#table_id thead').on('keyup', 'input', function () {
+                table.column($(this).parent().index()).search(this.value).draw();
+            });
+
+            $('.btn-primary, .btn-outline-primary').on('click', function () {
+                $('.collapse').collapse('hide');
+            });
+        });
+    </script>
+</body>
+
 </html>

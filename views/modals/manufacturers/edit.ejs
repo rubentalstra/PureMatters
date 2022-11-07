@@ -1,37 +1,17 @@
 <!-- Modal Edit Manufacturers -->
-<div
-    class="modal fade"
-    id="editManufacturers"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
-    tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
-    aria-hidden="true"
->
+<div class="modal fade" id="editManufacturers" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form
-                method="post"
-                action="/api/settings/manufacturers/edit"
-                enctype="application/x-www-form-urlencoded"
-            >
+            <form method="post" action="/api/settings/manufacturers/edit" enctype="application/x-www-form-urlencoded">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Fabrikant bewerken</h5>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="idEditManufacturer" name="idEditManufacturer" value="" />
-                    <input
-                        class="form-control"
-                        name="nameEditManufacturer"
-                        id="nameEditManufacturer"
-                        value=""
-                    />
+                    <input class="form-control" name="nameEditManufacturer" id="nameEditManufacturer" value=""
+                        required />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

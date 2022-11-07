@@ -1,197 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" status="width=device-width, initial-scale=1.0" />
 
-        <title>PureMatters Inventory - Add Product</title>
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" status="width=device-width, initial-scale=1.0" />
 
-        <link rel="stylesheet" href="/css/bootstrap.min.css" />
-        <link href="/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <title>PureMatters Inventory - Add Product</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-        <script defer src="/fontawesome/js/all.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link href="/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 
-        <link rel="stylesheet" href="/app.css" />
-        <link rel="stylesheet" href="/style.css" />
-    </head>
+    <script defer src="/fontawesome/js/all.js"></script>
 
-    <body>
-        <%- include('includes/navbar', {}); %>
+    <link rel="stylesheet" href="/app.css" />
+    <link rel="stylesheet" href="/style.css" />
+</head>
 
-        <div class="row" style="margin: auto">
-            <div id="card-div" class="col-md-12" style="margin-bottom: 0px !important">
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex flex-column align-items-center text-center">
-                                    <i class="fa-solid fa-warehouse fa-8x"></i>
-                                    <div class="mt-3">
-                                        <h4>Voeg nieuw product toe</h4>
-                                        <p>
-                                            Velden met een <span style="color: red">*</span> zijn verplicht om
-                                            het product aan te maken.
-                                        </p>
-                                        <p>Alle velden zijn daarna nog te bewerken.</p>
-                                    </div>
+<body>
+    <%- include('includes/navbar', {}); %>
+
+    <div class="row" style="margin: auto">
+        <div id="card-div" class="col-md-12" style="margin-bottom: 0px !important">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <i class="fa-solid fa-warehouse fa-8x"></i>
+                                <div class="mt-3">
+                                    <h4>Voeg nieuw product toe</h4>
+                                    <p>
+                                        Velden met een <span style="color: red">*</span> zijn verplicht om
+                                        het product aan te maken.
+                                    </p>
+                                    <p>Alle velden zijn daarna nog te bewerken.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8">
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <form
-                                    method="post"
-                                    action="/api/products/create"
-                                    enctype="application/x-www-form-urlencoded"
-                                >
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Naam<span style="color: red">*</span></h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input
-                                                type="text"
-                                                name="name"
-                                                class="form-control text-muted mb-0"
-                                                value=""
-                                                required
-                                            />
-                                        </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <form method="post" action="/api/products/create"
+                                enctype="application/x-www-form-urlencoded">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Naam<span style="color: red">*</span></h6>
                                     </div>
-                                    <hr />
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="text" name="name" class="form-control text-muted mb-0" value=""
+                                            required />
+                                    </div>
+                                </div>
+                                <hr />
 
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Fabrikant<span style="color: red">*</span></h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <select
-                                                name="manufacturer"
-                                                class="form-control form-select"
-                                                aria-label="Default select example"
-                                                required
-                                            >
-                                                <option selected disabled value="">
-                                                    Selecteer een fabrikant
-                                                </option>
-                                                <% if ( manufacturersList !=undefined) { %> <% for (var data
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Fabrikant<span style="color: red">*</span></h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <select name="manufacturer" class="form-control form-select"
+                                            aria-label="Default select example" required>
+                                            <option selected disabled value="">
+                                                Selecteer een fabrikant
+                                            </option>
+                                            <% if ( manufacturersList !=undefined) { %> <% for (var data
                                                 of manufacturersList) { %>
-                                                <option value="<%= data['name'] %>">
-                                                    <%= data['name'] %>
-                                                </option>
-                                                <% } %> <% } else { %> <% } %>
-                                            </select>
-                                        </div>
+                                            <option value="<%= data['name'] %>">
+                                                <%= data['name'] %>
+                                            </option>
+                                            <% } %> <% } else { %> <% } %>
+                                        </select>
                                     </div>
+                                </div>
 
-                                    <hr />
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Geslacht<span style="color: red">*</span></h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <select
-                                                name="sex"
-                                                class="form-control form-select"
-                                                aria-label="Default select example"
-                                                required
-                                            >
-                                                <option selected disabled value="">
-                                                    Selecteer het geslacht
-                                                </option>
-                                                <option value="Dames">Dames</option>
-                                                <option value="Heren">Heren</option>
-                                                <option value="Unisex">Unisex</option>
-                                                <option value="Kinderen">Kinderen</option>
-                                            </select>
-                                        </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Geslacht<span style="color: red">*</span></h6>
                                     </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <select name="sex" class="form-control form-select"
+                                            aria-label="Default select example" required>
+                                            <option selected disabled value="">
+                                                Selecteer het geslacht
+                                            </option>
+                                            <option value="Dames">Dames</option>
+                                            <option value="Heren">Heren</option>
+                                            <option value="Unisex">Unisex</option>
+                                            <option value="Kinderen">Kinderen</option>
+                                        </select>
+                                    </div>
+                                </div>
 
-                                    <hr />
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Categorie<span style="color: red">*</span></h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <select
-                                                name="category"
-                                                class="form-control form-select"
-                                                aria-label="Default select example"
-                                                required
-                                            >
-                                                <option selected disabled value="">
-                                                    Selecteer een categerie
-                                                </option>
-                                                <% if ( categoryList !=undefined) { %> <% for (var data of
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Categorie<span style="color: red">*</span></h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <select name="category" class="form-control form-select"
+                                            aria-label="Default select example" required>
+                                            <option selected disabled value="">
+                                                Selecteer een categerie
+                                            </option>
+                                            <% if ( categoryList !=undefined) { %> <% for (var data of
                                                 categoryList) { %>
-                                                <option value="<%= data['name'] %>">
-                                                    <%= data['name'] %>
-                                                </option>
-                                                <% } %> <% } else { %> <% } %>
-                                            </select>
-                                        </div>
+                                            <option value="<%= data['name'] %>">
+                                                <%= data['name'] %>
+                                            </option>
+                                            <% } %> <% } else { %> <% } %>
+                                        </select>
                                     </div>
-                                    <hr />
-                                    <div class="row">
-                                        <div class="col-sm-3"><h6 class="mb-0">Kleur</h6></div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input
-                                                type="text"
-                                                name="color"
-                                                class="form-control text-muted mb-0"
-                                                value=""
-                                            />
-                                        </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Kleur</h6>
                                     </div>
-                                    <hr />
-                                    <div class="row">
-                                        <div class="col-sm-3"><h6 class="mb-0">Maat</h6></div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input
-                                                type="text"
-                                                name="size"
-                                                class="form-control text-muted mb-0"
-                                                value=""
-                                            />
-                                        </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="text" name="color" class="form-control text-muted mb-0" value="" />
                                     </div>
-                                    <hr />
-                                    <div class="row">
-                                        <div class="col-sm-3"><h6 class="mb-0">Hoeveelheid</h6></div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input
-                                                type="number"
-                                                name="amount"
-                                                class="form-control text-muted mb-0"
-                                                value=""
-                                            />
-                                        </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Maat</h6>
                                     </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="text" name="size" class="form-control text-muted mb-0" value="" />
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Hoeveelheid</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="number" name="amount" class="form-control text-muted mb-0"
+                                            value="" />
+                                    </div>
+                                </div>
 
-                                    <hr />
-                                    <div class="row">
-                                        <div class="d-flex flex-column align-items-center text-center">
-                                            <button type="submit" class="btn btn-success">
-                                                Voeg Nieuw Product toe
-                                            </button>
-                                        </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="d-flex flex-column align-items-center text-center">
+                                        <button type="submit" class="btn btn-success">
+                                            Voeg Nieuw Product toe
+                                        </button>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <%- include('includes/footer'); %>
+    <%- include('includes/footer'); %>
 
-        <!-- importing bootstrap.js and supporting js libraries -->
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/popper.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
-    </body>
+    <!-- importing bootstrap.js and supporting js libraries -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+
 </html>

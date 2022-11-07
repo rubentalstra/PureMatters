@@ -1,338 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" status="width=device-width, initial-scale=1.0" />
 
-        <title>PureMatters Inventory - System settings</title>
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" status="width=device-width, initial-scale=1.0" />
 
-        <link rel="stylesheet" href="/css/bootstrap.min.css" />
-        <link href="/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <title>PureMatters Inventory - System settings</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-        <script defer src="/fontawesome/js/all.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link href="/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 
-        <link rel="stylesheet" href="/app.css" />
-        <link rel="stylesheet" href="/style.css" />
+    <script defer src="/fontawesome/js/all.js"></script>
 
-        <style>
-            .dataTables_filter {
-                display: none;
-            }
-        </style>
-    </head>
+    <link rel="stylesheet" href="/app.css" />
+    <link rel="stylesheet" href="/style.css" />
 
-    <body>
-        <%- include('includes/navbar', {}); %>
+    <style>
+        .dataTables_filter {
+            display: none;
+        }
+    </style>
+</head>
 
-        <!-- Categorie Lijst -->
-        <div class="row" style="margin: auto">
-            <div id="card-div" class="col-md-12">
-                <!-- DataTable -->
+<body>
+    <%- include('includes/navbar', {}); %>
 
-                <div class="clearfix">
-                    <div style="float: left"><h2>Categorieën Lijst</h2></div>
-                    <div style="float: right">
-                        <button type="button" class="btn btn-success createCategory">
-                            <i class="fa-solid fa-plus"></i> Categorie Toevoegen
-                        </button>
-                    </div>
+    <!-- Categorie Lijst -->
+    <div class="row" style="margin: auto">
+        <div id="card-div" class="col-md-12">
+            <!-- DataTable -->
+
+            <div class="clearfix">
+                <div style="float: left">
+                    <h2>Categorieën Lijst</h2>
                 </div>
-
-                <table id="table_category" class="table table-striped" style="width: 100%">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Naam</th>
-                            <th>Categorieën Bewerken</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th></th>
-                            <th class="text_search">Naam</th>
-
-                            <th>
-                                <button type="button" class="btn btn-secondary" id="clearFilterCategory">
-                                    <i class="fa-solid fa-eraser"></i> Clear
-                                </button>
-                            </th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-
-        <!-- Fabrikanten Lijst -->
-        <div class="row" style="margin: auto; padding-bottom: 150px">
-            <div class="col-md-12">
-                <!-- DataTable -->
-                <div class="clearfix">
-                    <div style="float: left"><h2>Fabrikanten Lijst</h2></div>
-                    <div style="float: right">
-                        <button type="button" class="btn btn-success createManufacturer">
-                            <i class="fa-solid fa-plus"></i> Fabrikant Toevoegen
-                        </button>
-                    </div>
+                <div style="float: right">
+                    <button type="button" class="btn btn-success createCategory">
+                        <i class="fa-solid fa-plus"></i> Categorie Toevoegen
+                    </button>
                 </div>
-
-                <table id="table_manufacturers" class="table table-striped" style="width: 100%">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Naam</th>
-                            <th>Fabrikanten Bewerken</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th></th>
-                            <th class="text_search">Naam</th>
-
-                            <th>
-                                <button type="button" class="btn btn-secondary" id="clearFilterManufacturers">
-                                    <i class="fa-solid fa-eraser"></i> Clear
-                                </button>
-                            </th>
-                        </tr>
-                    </tfoot>
-                </table>
             </div>
+
+            <table id="table_category" class="table table-striped" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Naam</th>
+                        <th>Categorieën Bewerken</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th class="text_search">Naam</th>
+
+                        <th>
+                            <button type="button" class="btn btn-secondary" id="clearFilterCategory">
+                                <i class="fa-solid fa-eraser"></i> Clear
+                            </button>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
+    </div>
 
-        <!-- Modals categories -->
-        <!-- Create -->
-        <%- include('modals/categories/create'); %>
-        <!-- Edit -->
-        <%- include('modals/categories/edit'); %>
-        <!-- Delete -->
-        <%- include('modals/categories/delete'); %>
+    <!-- Fabrikanten Lijst -->
+    <div class="row" style="margin: auto; padding-bottom: 150px">
+        <div class="col-md-12">
+            <!-- DataTable -->
+            <div class="clearfix">
+                <div style="float: left">
+                    <h2>Fabrikanten Lijst</h2>
+                </div>
+                <div style="float: right">
+                    <button type="button" class="btn btn-success createManufacturer">
+                        <i class="fa-solid fa-plus"></i> Fabrikant Toevoegen
+                    </button>
+                </div>
+            </div>
 
-        <!-- Modals Manufacturers -->
-        <!-- Create -->
-        <%- include('modals/manufacturers/create'); %>
-        <!-- Edit -->
-        <%- include('modals/manufacturers/edit'); %>
-        <!-- Delete -->
-        <%- include('modals/manufacturers/delete'); %>
+            <table id="table_manufacturers" class="table table-striped" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Naam</th>
+                        <th>Fabrikanten Bewerken</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th class="text_search">Naam</th>
 
-        <!-- Footer -->
-        <%- include('includes/footer'); %>
+                        <th>
+                            <button type="button" class="btn btn-secondary" id="clearFilterManufacturers">
+                                <i class="fa-solid fa-eraser"></i> Clear
+                            </button>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
 
-        <!-- importing bootstrap.js and supporting js libraries -->
-        <script src="/js/jquery.min.js"></script>
-        <script src="/jquery.dataTables.min.js"></script>
-        <script src="/js/dataTables.bootstrap5.min.js"></script>
-        <script src="/js/popper.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
+    <!-- Modals categories -->
+    <!-- Create -->
+    <%- include('modals/categories/create'); %>
+    <!-- Edit -->
+    <%- include('modals/categories/edit'); %>
+    <!-- Delete -->
+    <%- include('modals/categories/delete'); %>
 
-        <script>
-            $(document).ready(function () {
-                $.fn.dataTable.ext.errMode = 'none';
+    <!-- Modals Manufacturers -->
+    <!-- Create -->
+    <%- include('modals/manufacturers/create'); %>
+    <!-- Edit -->
+    <%- include('modals/manufacturers/edit'); %>
+    <!-- Delete -->
+    <%- include('modals/manufacturers/delete'); %>
 
-                // Category
-                $('#table_category').on('error.dt', function (e, settings, techNote, message) {
-                    console.log('An error has been reported by DataTables: ', message);
-                });
+    <!-- Footer -->
+    <%- include('includes/footer'); %>
 
-                // Create search inputs in footer
-                $('#table_category tfoot th').each(function () {
-                    var title = $(this).text();
-                    if ($(this)[0].className === 'text_search') {
-                        $(this).html('<input type="text"  placeholder="Zoek ' + title + '" />');
-                    }
-                });
+    <!-- importing bootstrap.js and supporting js libraries -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/jquery.dataTables.min.js"></script>
+    <script src="/js/dataTables.bootstrap5.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 
-                // DataTable initialisation
-                var table = $('#table_category').DataTable({
-                    paging: true,
-                    autoWidth: true,
-                    pageLength: 5,
-                    lengthMenu: [5, 10, 20, 50],
-                    ajax: {
-                        type: 'GET',
-                        url: '/api/settings/categories',
-                        dataSrc: function (json) {
-                            // console.log(json);
-                            return json;
-                        },
-                    },
+    <script>
+        $(document).ready(function () {
+            $.fn.dataTable.ext.errMode = 'none';
 
-                    aaSorting: [],
-                    columns: [
-                        {
-                            data: 'Index',
-                            render: function (data, type, full, meta) {
-                                return meta.row + 1;
-                            },
-                        },
-                        { data: 'name' },
-                        {
-                            data: 'id',
-                            render: function (data, type, row, meta) {
-                                return (
-                                    ' <button type="button" class="btn btn-warning editCategory" edit-id="' +
-                                    data +
-                                    '" edit-name="' +
-                                    row['name'] +
-                                    '" ><i class="fa-solid fa-pen"></i> Edit</button>' +
-                                    ' <button type="button" class="btn btn-danger delCategory" data-id="' +
-                                    data +
-                                    '" data-name="' +
-                                    row['name'] +
-                                    '" ><i class="fa-solid fa-trash-can"></i> Delete</button>'
-                                );
-                            },
-                        },
-                    ],
-                    columnDefs: [{ width: 10, targets: 0 }],
-
-                    initComplete: function (settings, json) {
-                        var footer = $('#table_category tfoot tr');
-                        $('#table_category thead').append(footer);
-                    },
-                });
-                // Apply the search
-                $('#table_category thead').on('keyup', 'input', function () {
-                    table.column($(this).parent().index()).search(this.value).draw();
-                });
-
-                $('#clearFilterCategory').click(function () {
-                    table.search('').columns().search('').draw();
-                    $('input:text').val('');
-                    $('select').val('');
-                });
-                // end Category
-
-                // Manufacturers
-
-                $('#table_manufacturers').on('error.dt', function (e, settings, techNote, message) {
-                    console.log('An error has been reported by DataTables: ', message);
-                });
-
-                // Create search inputs in footer
-                $('#table_manufacturers tfoot th').each(function () {
-                    var title = $(this).text();
-                    if ($(this)[0].className === 'text_search') {
-                        $(this).html('<input type="text"  placeholder="Zoek ' + title + '" />');
-                    }
-                });
-
-                // DataTable initialisation
-                var tableManufacturers = $('#table_manufacturers').DataTable({
-                    paging: true,
-                    autoWidth: true,
-                    pageLength: 5,
-                    lengthMenu: [5, 10, 20, 50],
-                    ajax: {
-                        type: 'GET',
-                        url: '/api/settings/manufacturers',
-                        dataSrc: function (json) {
-                            // console.log(json);
-                            return json;
-                        },
-                    },
-
-                    aaSorting: [],
-                    columns: [
-                        {
-                            data: 'Index',
-                            render: function (data, type, full, meta) {
-                                return meta.row + 1;
-                            },
-                        },
-                        { data: 'name' },
-                        {
-                            data: 'id',
-                            render: function (data, type, row, meta) {
-                                return (
-                                    ' <button type="button" class="btn btn-warning editManufacturer" edit-id="' +
-                                    data +
-                                    '" edit-name="' +
-                                    row['name'] +
-                                    '" ><i class="fa-solid fa-pen"></i> Edit</button>' +
-                                    ' <button type="button" class="btn btn-danger delManufacturer" data-id="' +
-                                    data +
-                                    '" data-name="' +
-                                    row['name'] +
-                                    '" ><i class="fa-solid fa-trash-can"></i> Delete</button>'
-                                );
-                            },
-                        },
-                    ],
-                    columnDefs: [{ width: 10, targets: 0 }],
-
-                    initComplete: function (settings, json) {
-                        var footer = $('#table_manufacturers tfoot tr');
-                        $('#table_manufacturers thead').append(footer);
-                    },
-                });
-                // Apply the search
-                $('#table_manufacturers thead').on('keyup', 'input', function () {
-                    table.column($(this).parent().index()).search(this.value).draw();
-                });
-
-                $('#clearFilterManufacturers').click(function () {
-                    table.search('').columns().search('').draw();
-                    $('input:text').val('');
-                    $('select').val('');
-                });
-                // end Manufacturers
-
-                // Modals
-
-                /// Categories
-                $('body').on('click', '.createCategory', function () {
-                    $('#createCategory').modal('show');
-                });
-                $('body').on('click', '.editCategory', function () {
-                    var name = $(this).attr('edit-name');
-                    $('#nameEditCategory').val(name);
-                    var id = $(this).attr('edit-id');
-                    $('#idEditCategory').val(id);
-                    $('#editCategory').modal('show');
-                });
-                $('body').on('click', '.delCategory', function () {
-                    var id = $(this).attr('data-id');
-                    $('#idDeleteCategory').val(id);
-
-                    var name = $(this).attr('data-name');
-
-                    var str =
-                        'Weet je zeker dat je onderstaande categorie wilt verwijderen: <br><br>  <h4><b>' +
-                        name +
-                        '</b></h4>';
-                    $('#nameDeleteCategory').html(str);
-
-                    $('#delCategory').modal('show');
-                });
-
-                // Manufacturers
-                $('body').on('click', '.createManufacturer', function () {
-                    $('#createManufacturers').modal('show');
-                });
-                $('body').on('click', '.editManufacturer', function () {
-                    var id = $(this).attr('edit-id');
-                    $('#idEditManufacturer').val(id);
-                    var name = $(this).attr('edit-name');
-                    $('#nameEditManufacturer').val(name);
-                    $('#editManufacturers').modal('show');
-                });
-                $('body').on('click', '.delManufacturer', function () {
-                    var id = $(this).attr('data-id');
-                    $('#idDeleteManufacturer').val(id);
-
-                    var name = $(this).attr('data-name');
-
-                    var str =
-                        'Weet je zeker dat je onderstaande fabrikant wilt verwijderen: <br><br>  <h4><b>' +
-                        name +
-                        '</b></h4>';
-                    $('#nameDeleteManufacturer').html(str);
-
-                    $('#delManufacturers').modal('show');
-                });
+            // Category
+            $('#table_category').on('error.dt', function (e, settings, techNote, message) {
+                console.log('An error has been reported by DataTables: ', message);
             });
-        </script>
-    </body>
+
+            // Create search inputs in footer
+            $('#table_category tfoot th').each(function () {
+                var title = $(this).text();
+                if ($(this)[0].className === 'text_search') {
+                    $(this).html('<input type="text"  placeholder="Zoek ' + title + '" />');
+                }
+            });
+
+            // DataTable initialisation
+            var table = $('#table_category').DataTable({
+                paging: true,
+                autoWidth: true,
+                pageLength: 5,
+                lengthMenu: [5, 10, 20, 50],
+                ajax: {
+                    type: 'GET',
+                    url: '/api/settings/categories',
+                    dataSrc: function (json) {
+                        // console.log(json);
+                        return json;
+                    },
+                },
+
+                aaSorting: [],
+                columns: [
+                    {
+                        data: 'Index',
+                        render: function (data, type, full, meta) {
+                            return meta.row + 1;
+                        },
+                    },
+                    { data: 'name' },
+                    {
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            return (
+                                ' <button type="button" class="btn btn-warning editCategory" edit-id="' +
+                                data +
+                                '" edit-name="' +
+                                row['name'] +
+                                '" ><i class="fa-solid fa-pen"></i> Edit</button>' +
+                                ' <button type="button" class="btn btn-danger delCategory" data-id="' +
+                                data +
+                                '" data-name="' +
+                                row['name'] +
+                                '" ><i class="fa-solid fa-trash-can"></i> Delete</button>'
+                            );
+                        },
+                    },
+                ],
+                columnDefs: [{ width: 10, targets: 0 }],
+
+                initComplete: function (settings, json) {
+                    var footer = $('#table_category tfoot tr');
+                    $('#table_category thead').append(footer);
+                },
+            });
+            // Apply the search
+            $('#table_category thead').on('keyup', 'input', function () {
+                table.column($(this).parent().index()).search(this.value).draw();
+            });
+
+            $('#clearFilterCategory').click(function () {
+                table.search('').columns().search('').draw();
+                $('input:text').val('');
+                $('select').val('');
+            });
+            // end Category
+
+            // Manufacturers
+
+            $('#table_manufacturers').on('error.dt', function (e, settings, techNote, message) {
+                console.log('An error has been reported by DataTables: ', message);
+            });
+
+            // Create search inputs in footer
+            $('#table_manufacturers tfoot th').each(function () {
+                var title = $(this).text();
+                if ($(this)[0].className === 'text_search') {
+                    $(this).html('<input type="text"  placeholder="Zoek ' + title + '" />');
+                }
+            });
+
+            // DataTable initialisation
+            var tableManufacturers = $('#table_manufacturers').DataTable({
+                paging: true,
+                autoWidth: true,
+                pageLength: 5,
+                lengthMenu: [5, 10, 20, 50],
+                ajax: {
+                    type: 'GET',
+                    url: '/api/settings/manufacturers',
+                    dataSrc: function (json) {
+                        // console.log(json);
+                        return json;
+                    },
+                },
+
+                aaSorting: [],
+                columns: [
+                    {
+                        data: 'Index',
+                        render: function (data, type, full, meta) {
+                            return meta.row + 1;
+                        },
+                    },
+                    { data: 'name' },
+                    {
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            return (
+                                ' <button type="button" class="btn btn-warning editManufacturer" edit-id="' +
+                                data +
+                                '" edit-name="' +
+                                row['name'] +
+                                '" ><i class="fa-solid fa-pen"></i> Edit</button>' +
+                                ' <button type="button" class="btn btn-danger delManufacturer" data-id="' +
+                                data +
+                                '" data-name="' +
+                                row['name'] +
+                                '" ><i class="fa-solid fa-trash-can"></i> Delete</button>'
+                            );
+                        },
+                    },
+                ],
+                columnDefs: [{ width: 10, targets: 0 }],
+
+                initComplete: function (settings, json) {
+                    var footer = $('#table_manufacturers tfoot tr');
+                    $('#table_manufacturers thead').append(footer);
+                },
+            });
+            // Apply the search
+            $('#table_manufacturers thead').on('keyup', 'input', function () {
+                table.column($(this).parent().index()).search(this.value).draw();
+            });
+
+            $('#clearFilterManufacturers').click(function () {
+                table.search('').columns().search('').draw();
+                $('input:text').val('');
+                $('select').val('');
+            });
+            // end Manufacturers
+
+            // Modals
+
+            /// Categories
+            $('body').on('click', '.createCategory', function () {
+                $('#createCategory').modal('show');
+            });
+            $('body').on('click', '.editCategory', function () {
+                var name = $(this).attr('edit-name');
+                $('#nameEditCategory').val(name);
+                var id = $(this).attr('edit-id');
+                $('#idEditCategory').val(id);
+                $('#editCategory').modal('show');
+            });
+            $('body').on('click', '.delCategory', function () {
+                var id = $(this).attr('data-id');
+                $('#idDeleteCategory').val(id);
+
+                var name = $(this).attr('data-name');
+
+                var str =
+                    'Weet je zeker dat je onderstaande categorie wilt verwijderen: <br><br>  <h4><b>' +
+                    name +
+                    '</b></h4>';
+                $('#nameDeleteCategory').html(str);
+
+                $('#delCategory').modal('show');
+            });
+
+            // Manufacturers
+            $('body').on('click', '.createManufacturer', function () {
+                $('#createManufacturers').modal('show');
+            });
+            $('body').on('click', '.editManufacturer', function () {
+                var id = $(this).attr('edit-id');
+                $('#idEditManufacturer').val(id);
+                var name = $(this).attr('edit-name');
+                $('#nameEditManufacturer').val(name);
+                $('#editManufacturers').modal('show');
+            });
+            $('body').on('click', '.delManufacturer', function () {
+                var id = $(this).attr('data-id');
+                $('#idDeleteManufacturer').val(id);
+
+                var name = $(this).attr('data-name');
+
+                var str =
+                    'Weet je zeker dat je onderstaande fabrikant wilt verwijderen: <br><br>  <h4><b>' +
+                    name +
+                    '</b></h4>';
+                $('#nameDeleteManufacturer').html(str);
+
+                $('#delManufacturers').modal('show');
+            });
+        });
+    </script>
+</body>
+
 </html>

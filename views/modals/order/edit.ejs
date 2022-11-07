@@ -1,56 +1,33 @@
 <!-- Modal Edit Manufacturers -->
-<div
-    class="modal fade"
-    id="editOrder"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
-    tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
-    aria-hidden="true"
->
+<div class="modal fade" id="editOrder" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form method="post" action="/api/products/order/edit" enctype="application/x-www-form-urlencoded">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Bewerken</h5>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="productId" name="productId" value="<%= id %>" />
-                    <input
-                        type="hidden"
-                        id="ProductOrderAmount"
-                        name="ProductOrderAmount"
-                        value="<%= ProductOrderAmount %>"
-                    />
+                    <input type="hidden" id="ProductOrderAmount" name="ProductOrderAmount"
+                        value="<%= ProductOrderAmount %>" />
                     <input type="hidden" id="editOrderId" name="editOrderId" />
-                    <input
-                        type="hidden"
-                        class="form-control"
-                        name="oldAmountOrderEdit"
-                        id="oldAmountOrderEdit"
-                    />
+                    <input type="hidden" class="form-control" name="oldAmountOrderEdit" id="oldAmountOrderEdit" />
 
                     <div class="row">
-                        <div class="col-sm-6"><h6 class="mb-0">Hoeveelheid</h6></div>
                         <div class="col-sm-6">
-                            <input class="form-control" name="amountOrderEdit" id="amountOrderEdit" />
+                            <h6 class="mb-0">Hoeveelheid</h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <input class="form-control" name="amountOrderEdit" id="amountOrderEdit" required />
                         </div>
                     </div>
 
                     <hr />
                     <p>Notes:</p>
-                    <textarea
-                        name="notesOrderEdit"
-                        id="notesOrderEdit"
-                        rows="13"
-                        style="height: 100%; width: 100%"
-                    ></textarea>
+                    <textarea name="notesOrderEdit" id="notesOrderEdit" rows="13"
+                        style="height: 100%; width: 100%"></textarea>
                 </div>
 
                 <div class="modal-footer">

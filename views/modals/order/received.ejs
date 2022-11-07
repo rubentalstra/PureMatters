@@ -1,47 +1,24 @@
 <!-- Modal Delete Manufacturers -->
-<div
-    class="modal fade"
-    id="receivedOrder"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
-    tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
-    aria-hidden="true"
->
+<div class="modal fade" id="receivedOrder" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form
-                method="post"
-                action="/api/products/order/received"
-                enctype="application/x-www-form-urlencoded"
-            >
+            <form method="post" action="/api/products/order/received" enctype="application/x-www-form-urlencoded">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Ontvangen</h5>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="productId" name="productId" value="<%= id %>" />
-                    <input
-                        type="hidden"
-                        id="ProductOrderAmount"
-                        name="ProductOrderAmount"
-                        value="<%= ProductOrderAmount %>"
-                    />
-                    <input
-                        type="hidden"
-                        id="ProductAmount"
-                        name="ProductAmount"
-                        value="<%= ProductAmount %>"
-                    />
+                    <input type="hidden" id="ProductOrderAmount" name="ProductOrderAmount"
+                        value="<%= ProductOrderAmount %>" />
+                    <input type="hidden" id="ProductAmount" name="ProductAmount" value="<%= ProductAmount %>" />
                     <input type="hidden" id="receivedId" name="receivedId" />
 
                     <div class="row">
-                        <div class="col-sm-6"><h6 class="mb-0">Hoeveelheid</h6></div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-0">Hoeveelheid</h6>
+                        </div>
                         <div class="col-sm-6">
                             <input class="form-control" name="receivedAmount" id="receivedAmount" readonly />
                         </div>
@@ -49,13 +26,8 @@
 
                     <hr />
                     <p>Notes:</p>
-                    <textarea
-                        name="receivedNotes"
-                        id="receivedNotes"
-                        rows="13"
-                        style="height: 100%; width: 100%"
-                        readonly
-                    ></textarea>
+                    <textarea name="receivedNotes" id="receivedNotes" rows="13" style="height: 100%; width: 100%"
+                        readonly></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
