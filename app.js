@@ -93,8 +93,8 @@ app.use(getRoutes(mainController, express.Router()));
 
 // https
 const options = {
-    key: fs.readFileSync('./cert/key.key'),
-    cert: fs.readFileSync('./cert/cert.crt'),
+    key: fs.readFileSync(`./cert/${process.env.NODE_ENV}/server.key`),
+    cert: fs.readFileSync(`./cert/${process.env.NODE_ENV}/server.crt`),
 };
 
 const server = https.createServer(options, app);
