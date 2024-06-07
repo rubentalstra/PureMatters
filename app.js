@@ -1,19 +1,6 @@
 require('dotenv').config({ path: `./env/.env` });
-const express = require('express');
-const helmet = require('helmet');
-
-const https = require('https');
-const rateLimit = require('express-rate-limit');
-
 const Sentry = require('@sentry/node');
 const { nodeProfilingIntegration } = require("@sentry/profiling-node");
-
-const fs = require('fs');
-const path = require('path');
-const getRoutes = require('./router/router');
-const mainController = require('./controllers/controller');
-
-const app = express();
 
 
 Sentry.init({
@@ -25,8 +12,6 @@ Sentry.init({
         Sentry.httpIntegration({
             tracing: true,
         }),
-        // enable Express.js middleware tracing
-        Sentry.expressIntegration({ app }),
         // Add our Profiling integration
         nodeProfilingIntegration(),
     ],
@@ -38,6 +23,16 @@ Sentry.init({
     profilesSampleRate: 1.0,
 });
 
+const https = require('https');
+const rateLimit = require('express-rate-limit');
+const fs = require('fs');
+const path = require('path');
+const getRoutes = require('./router/router');
+const mainController = require('./controllers/controller');
+
+const express = require('express');
+
+const app = express();
 
 app.get('/favicon.ico', (req, res) => {
     return res.sendFile(path.join(__dirname + '/public/icon/favicon.png'));
