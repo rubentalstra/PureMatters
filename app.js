@@ -15,13 +15,18 @@ const mainController = require('./controllers/controller');
 
 const app = express();
 
+
 Sentry.init({
     dsn: 'https://765aef555b484dfe9ba7376a879757a8@o1355496.ingest.sentry.io/6640081',
+    environment: process.env.NODE_ENV,
     integrations: [
         // enable HTTP calls tracing
-        new Sentry.Integrations.Http({ tracing: true }),
+        // new Sentry.Integrations.Http({ tracing: true }),
+        Sentry.httpIntegration({
+            tracing: true,
+        }),
         // enable Express.js middleware tracing
-        new Tracing.Integrations.Express({ app }),
+        Sentry.expressIntegration({ app }),
     ],
     // This is the diffrent environments of the server
     // environment: process.env.NODE_ENV,
