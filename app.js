@@ -6,7 +6,7 @@ const https = require('https');
 const rateLimit = require('express-rate-limit');
 
 const Sentry = require('@sentry/node');
-const Tracing = require('@sentry/tracing');
+const { nodeProfilingIntegration } = require("@sentry/profiling-node");
 
 const fs = require('fs');
 const path = require('path');
@@ -27,36 +27,17 @@ Sentry.init({
         }),
         // enable Express.js middleware tracing
         Sentry.expressIntegration({ app }),
+        // Add our Profiling integration
+        nodeProfilingIntegration(),
     ],
-    // This is the diffrent environments of the server
-    // environment: process.env.NODE_ENV,
 
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.
     // We recommend adjusting this value in production
     tracesSampleRate: 1.0,
+    profilesSampleRate: 1.0,
 });
 
-// RequestHandler creates a separate execution context using domains, so that every
-// transaction/span/breadcrumb is attached to its own Hub instance
-app.use(Sentry.Handlers.requestHandler());
-// TracingHandler creates a trace for every incoming request
-app.use(Sentry.Handlers.tracingHandler());
-
-// app.use(
-//     helmet({
-//         frameguard: {
-//             action: 'deny',
-//         },
-//         contentSecurityPolicy: {
-//             directives: {
-//                 ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-//                 'script-src': ["'self'"],
-//                 'connect-src': ["'self'"],
-//             },
-//         },
-//     })
-// );
 
 app.get('/favicon.ico', (req, res) => {
     return res.sendFile(path.join(__dirname + '/public/icon/favicon.png'));

@@ -74,7 +74,7 @@ const getRoutes = (mainController, router) => {
     router.post('/api/settings/manufacturers/delete', mainController.delManufacture);
 
     // The error handler must be before any other error middleware and after all controllers
-    router.use(Sentry.Handlers.errorHandler());
+    Sentry.setupExpressErrorHandler(router);
 
     // 404
     // router.get('*', (req, res) => res.status(404).redirect('/404.html'));

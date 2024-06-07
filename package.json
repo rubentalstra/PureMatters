@@ -19,6 +19,7 @@
     "homepage": "https://github.com/rubentalstra/PureMatters#readme",
     "dependencies": {
         "@sentry/node": "^8.8.0",
+        "@sentry/profiling-node": "^8.8.0",
         "@sentry/tracing": "^7.114.0",
         "bootstrap": "^5.3.3",
         "datatables.net-bs5": "^2.0.8",
